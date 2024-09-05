@@ -1,6 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
-
-interface CustomResponseFormat {
+export interface CustomResponseFormat {
   message: string;
   status: number;
   data?: any;
