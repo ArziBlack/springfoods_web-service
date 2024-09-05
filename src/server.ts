@@ -4,7 +4,6 @@ import express, { Application, json } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import colors from "colors";
-import responseMiddleware from "./middleware/response";
 
 dotenv.config();
 
@@ -21,7 +20,7 @@ application.use(json());
 application.get("/health-check", (req, res) => {
   res.status(200).json({
     message: "Test GET request successful!",
-    status: 200,
+    success: true,
     data: { info: "This is test data" },
   });
   console.log(colors.cyan("Spring Foods ECommerce Server Started and Running."));
