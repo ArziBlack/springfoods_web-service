@@ -8,7 +8,9 @@
     "run": "npm run build && node ./dist/server.js",
     "dev": "nodemon src/server.ts",
     "build": "tsc -p .",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "format": "prettier --check --ignore-path .gitignore .",
+    "format:fix": "prettier --write --ignore-path .gitignore ."
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,5 @@
 import CryptoJS from "crypto-js";
+import { Response } from "express";
 import { User } from "../models/user.model";
 import { Contact } from "../models/contact.model";
 import { TypedRequest, TypedResponse } from "../typings";
@@ -8,7 +9,6 @@ import {
 } from "../services/validation/authValidator";
 import { isPasswordValid } from "../utils/cryptoJS";
 import { signToken, TokenPayload } from "../services/jwtService";
-import { Response } from "express";
 
 // SIGNUP CUSTOMER
 export const signup_customer = async (
@@ -91,7 +91,7 @@ export const signin_customer = async (
 
     const user = await User.findOne({
       email: req.body.email,
-    }).populate('contact');
+    }).populate("contact");
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -100,19 +100,19 @@ export const signin_customer = async (
       });
     }
 
-    if(user.password) {
-        const isValid = await isPasswordValid(req.body.password, user?.password);
-        if (!isValid) {
-          return res.status(401).json({
-            success: false,
-            message: "Invalid Password",
-            errors: { error: "password do not match" },
-          });
-        }
+    if (user.password) {
+      const isValid = await isPasswordValid(req.body.password, user?.password);
+      if (!isValid) {
+        return res.status(401).json({
+          success: false,
+          message: "Invalid Password",
+          errors: { error: "password do not match" },
+        });
+      }
     }
 
     if (!user.email) {
-        return res.status(401).json({ success: false, message: "Invalid Email" });
+      return res.status(401).json({ success: false, message: "Invalid Email" });
     }
 
     const payload: TokenPayload = {
@@ -131,5 +131,15 @@ export const signin_customer = async (
       message: "Login successful",
       data: { ...userWithoutPassword, token },
     });
-  } catch (error) {}
+  } catch (error: unknown) {
+    const response: ApiResponse<never> = {
+      success: false,
+      message: "Error signing up customer",
+      errors: {
+        general: [error instanceof Error ? error.message : "Unknown error"],
+      },
+    };
+
+    res.status(500).json(response);
+  }
 };
