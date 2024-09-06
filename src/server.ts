@@ -11,7 +11,7 @@ if (!PORT) {
   process.exit(1);
 }
 
-// connectDB();
+connectDB();
 
 const application: Application = express();
 
