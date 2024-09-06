@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node ./dist/server.js",
     "run": "npm run build && node ./dist/server.js",
-    "dev": "nodemon src/server.ts",
+    "dev": "npm run format && nodemon src/server.ts",
     "build": "tsc -p .",
-    "server": "nodemon server.js",
+    "server": "npm run format:fix && nodemon server.js",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore ."
   },

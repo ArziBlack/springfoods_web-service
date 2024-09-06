@@ -9,7 +9,7 @@ const reviewSchema = new Schema(
     reviewTitle: { type: String, maxlength: 100 },
     comment: { type: String, maxlength: 500 },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Review = model("Review", reviewSchema);

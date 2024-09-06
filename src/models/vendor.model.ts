@@ -37,7 +37,7 @@ const vendorSchema = new Schema(
     ],
     ratings: {
       type: Number,
-      default: 0, 
+      default: 0,
     },
     total_sales: {
       type: Number,
@@ -55,7 +55,7 @@ const vendorSchema = new Schema(
       default: Date.now,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Vendor = model("Vendor", vendorSchema);

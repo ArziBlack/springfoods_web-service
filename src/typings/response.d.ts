@@ -1,4 +1,4 @@
-type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse
+type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse;
 
 interface ApiSuccessResponse<T> {
   success: true;

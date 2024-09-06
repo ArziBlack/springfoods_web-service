@@ -1,4 +1,3 @@
-
 interface ISignupRequest {
   password: string;
   role: "user" | "admin" | "vendor";

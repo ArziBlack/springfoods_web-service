@@ -13,7 +13,7 @@ import { signToken, TokenPayload } from "../services/jwtService";
 // SIGNUP CUSTOMER
 export const signup_customer = async (
   req: TypedRequest<ISignupRequest>,
-  res: TypedResponse<ISignupResponse | ApiErrorResponse>
+  res: TypedResponse<ISignupResponse | ApiErrorResponse>,
 ) => {
   try {
     const { error } = signupSchema.validate(req.body, { abortEarly: false });
@@ -76,7 +76,7 @@ export const signup_customer = async (
 // SIGNIN CUSTOMER
 export const signin_customer = async (
   req: TypedRequest<ISigninRequest>,
-  res: Response
+  res: Response,
 ) => {
   try {
     const { error } = signinSchema.validate(req.body, { abortEarly: false });

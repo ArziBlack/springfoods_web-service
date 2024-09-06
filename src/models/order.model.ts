@@ -64,7 +64,7 @@ const orderSchema = new Schema(
       default: null,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Order = model("Order", orderSchema);

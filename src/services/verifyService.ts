@@ -11,7 +11,7 @@ export async function verify(req: Request, res: Response, next: NextFunction) {
       (err: any, user: any) => {
         if (err) return res.status(403).json("Token cannot be verified!!!");
         next();
-      }
+      },
     );
   } else {
     return res.status(401).json("You are not Authenticated");
