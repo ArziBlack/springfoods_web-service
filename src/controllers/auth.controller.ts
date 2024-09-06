@@ -8,7 +8,7 @@ import {
 } from "../services/validation/authValidator";
 import { isPasswordValid } from "../utils/cryptoJS";
 import { signToken, TokenPayload } from "../services/jwtService";
-import { ISigninRequest, ISigninResponse, ISignupRequest, ISignupResponse } from "../interfaces/auth";
+import { Response } from "express";
 
 // SIGNUP CUSTOMER
 export const signup_customer = async (
@@ -76,7 +76,7 @@ export const signup_customer = async (
 // SIGNIN CUSTOMER
 export const signin_customer = async (
   req: TypedRequest<ISigninRequest>,
-  res: TypedResponse<ISigninResponse | ApiErrorResponse>
+  res: Response
 ) => {
   try {
     const { error } = signinSchema.validate(req.body, { abortEarly: false });
@@ -111,15 +111,21 @@ export const signin_customer = async (
         }
     }
 
+    if (!user.email) {
+        return res.status(401).json({ success: false, message: "Invalid Email" });
+    }
 
     const payload: TokenPayload = {
-      userId: user._id,
+      userId: user._id.toString(),
       role: user.role,
     };
 
     const token = await signToken(payload);
 
-    const { password, ...userWithoutPassword } = user.toObject();
+    const userObject = user.toObject();
+
+    const { password, ...userWithoutPassword } = userObject;
+
     res.status(200).json({
       success: true,
       message: "Login successful",

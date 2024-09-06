@@ -1,4 +1,3 @@
-import { ObjectId } from "mongoose";
 
 interface ISignupRequest {
   password: string;
@@ -24,17 +23,4 @@ interface ISignupResponse {}
 interface ISigninRequest {
   email: string;
   password: string;
-}
-
-interface ISigninResponse {
-  _id: string | ObjectId;
-  password: string | null;
-  role: string;
-  gender: string;
-  email: string | null;
-  profile_image: string;
-  date_of_birth: Date;
-  isEmailVerified: boolean;
-  last_login: Date;
-  contact: string[];
 }

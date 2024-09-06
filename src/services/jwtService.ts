@@ -1,10 +1,9 @@
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../constants/conn';
-import { ObjectId } from 'mongoose';
 
 export interface TokenPayload {
-  userId?: ObjectId;
-  role?: string;
+  userId: string | null;
+  role?: string | null;
 }
 
 export const signToken = (payload: TokenPayload): string => {
