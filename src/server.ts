@@ -6,6 +6,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import cors from "cors";
 import colors from "colors";
+import { errorHandler } from "./middleware/errorHandler";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ if (NODE_ENV === "development") {
 
 application.use(cors({ credentials: true }));
 application.use(json());
+application.use(errorHandler);
 application.use("/v1", routes);
 application.listen(PORT, () => {
   console.log(
