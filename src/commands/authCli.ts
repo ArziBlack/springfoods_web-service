@@ -95,7 +95,7 @@ program
 
     await sendEmail({
       to: options.email,
-      subject: "Welcome to BlackMarket!",
+      subject: "Welcome to Spring Foods!",
       html: emailHtml,
     });
 
