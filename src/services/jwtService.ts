@@ -6,10 +6,15 @@ export interface TokenPayload {
   role?: string | null;
 }
 
-export const signToken = (payload: TokenPayload): string => {
+export const signToken = async(payload: TokenPayload): Promise<string> => {
   const options: jwt.SignOptions = {
     expiresIn: "2d",
   };
 
-  return jwt.sign(payload, JWT_SECRET, options);
+  if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET is not defined');
+  }
+
+  console.log(JWT_SECRET);
+  return await jwt.sign(payload, JWT_SECRET, options);
 };

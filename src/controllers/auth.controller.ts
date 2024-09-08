@@ -97,7 +97,7 @@ export const signin_customer = async (
 
     const user = await User.findOne({
       email: req.body.email,
-    }).populate("Contact");
+    }).populate("contact");
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -122,7 +122,7 @@ export const signin_customer = async (
     }
 
     const payload: TokenPayload = {
-      userId: user._id.toString(),
+      userId: user.email.toString(),
       role: user.role,
     };
 
@@ -140,12 +140,12 @@ export const signin_customer = async (
   } catch (error: unknown) {
     const response: ApiResponse<never> = {
       success: false,
-      message: "Error signing up customer",
+      message: "Error signing customer",
       errors: {
         general: [error instanceof Error ? error.message : "Unknown error"],
       },
     };
-
+    console.log(error);
     res.status(500).json(response);
   }
 };

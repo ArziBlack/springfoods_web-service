@@ -10,7 +10,8 @@
     "build": "tsc -p .",
     "server": "npm run format:fix && nodemon server.js",
     "format": "prettier --check --ignore-path .gitignore .",
-    "format:fix": "prettier --write --ignore-path .gitignore ."
+    "format:fix": "prettier --write --ignore-path .gitignore .",
+     "cli": "ts-node src/commands/authCli.ts"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,8 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.5.3",
+    "cli-table3": "^0.6.5",
+    "commander": "^12.1.0",
     "nodemon": "^3.1.4",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",

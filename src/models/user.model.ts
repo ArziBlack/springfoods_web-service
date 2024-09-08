@@ -32,12 +32,11 @@ const userSchema = new Schema(
     },
     date_of_birth: {
       type: Date,
-      required: true,
+      // required: true,
     },
     isEmailVerified: {
       type: Boolean,
       default: false,
-      required: true,
     },
     last_login: {
       type: Date,
