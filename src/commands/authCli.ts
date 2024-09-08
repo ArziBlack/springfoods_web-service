@@ -88,16 +88,40 @@ program
       });
 
       const emailHtml = `
-      <h1>Welcome to Spring Foods</h1>
-      <p>Hi ${savedContact.first_name},</p>
-      <p>Thank you for signing up. We're excited to have you on board!</p>
-    `;
+          <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+            <h1 style="font-size: 24px; font-weight: bold; color: #1D4ED8;">Welcome to Spring Foods!</h1>
+            <p style="font-size: 16px; color: #4B5563;">Dear ${savedContact.first_name},</p>
 
-    await sendEmail({
-      to: options.email,
-      subject: "Welcome to Spring Foods!",
-      html: emailHtml,
-    });
+            <p style="font-size: 16px; color: #4B5563; line-height: 1.6;">
+              We're thrilled to have you join the Spring Foods community! Whether you're here to discover delicious meals, shop for fresh ingredients, or explore our exclusive offers, we want to ensure that your experience with us is enjoyable and seamless.
+            </p>
+
+            <p style="font-size: 16px; color: #4B5563; line-height: 1.6;">
+              As a member, you'll receive personalized recommendations, access to limited-time promotions, and the latest updates on new arrivals and exciting features. We're committed to making Spring Foods your go-to destination for everything food-related!
+            </p>
+
+            <p style="font-size: 16px; color: #4B5563; line-height: 1.6;">
+              If you have any questions or need assistance, feel free to reach out to our support team at any time. We're always here to help.
+            </p>
+
+            <p style="font-size: 16px; color: #4B5563; line-height: 1.6;">
+              Welcome aboard, and we can't wait to serve you the best of what Spring Foods has to offer!
+            </p>
+
+            <p style="font-size: 16px; color: #4B5563;">Warm regards,</p>
+            <p style="font-size: 16px; color: #4B5563;">The Spring Foods Team</p>
+
+            <hr style="margin-top: 20px; border: none; border-top: 1px solid #eaeaea;" />
+            <p style="font-size: 12px; color: #9CA3AF; line-height: 1.5;">
+              This is an automated message, please do not reply directly to this email. If you have any questions, visit our <a href="https://springfoods.com/support" style="color: #1D4ED8;">Help Center</a>.
+            </p>
+          </div>`;
+
+      await sendEmail({
+        to: options.email,
+        subject: "Welcome to Spring Foods!",
+        html: emailHtml,
+      });
 
       table.push(
         ["ID", savedUser._id],
@@ -124,7 +148,7 @@ program
     }
   });
 
-  program
+program
   .command("login-user")
   .description("Login a user")
   .option("--email <string>", "User's email address")
@@ -149,6 +173,5 @@ program
 
     await signin_customer(req as any, res as any);
   });
-
 
 program.parse(process.argv);
