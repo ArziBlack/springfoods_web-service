@@ -16,6 +16,7 @@ import {
 } from "../interfaces/auth";
 import { ApiErrorResponse, ApiResponse } from "../typings/response";
 import { sendEmail } from "../services/emailService";
+import { verify_email_token } from "../services/verifyService";
 
 // SIGNUP CUSTOMER
 export const signup_customer = async (
@@ -60,6 +61,13 @@ export const signup_customer = async (
 
     const savedUser = await user.save();
 
+    const payload: TokenPayload = {
+      userId: user.email.toString(),
+      role: user.role,
+    };
+
+    const verificationToken = await signToken(payload);
+
     const emailHtml = `
   <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
     <h1 style="font-size: 24px; font-weight: bold; color: #1D4ED8;">Welcome to Spring Foods!</h1>
@@ -70,7 +78,7 @@ export const signup_customer = async (
     </p>
 
     <div style="text-align: center; margin: 30px 0;">
-      <a href="https://springfoods.com/verify?token=${"verificationToken"}" 
+      <a href="https://springfoods.com/verify/${savedContact.email}/${verificationToken}" 
          style="background-color: #1D4ED8; color: white; padding: 12px 24px; text-decoration: none; font-size: 16px; border-radius: 5px;">
         Verify Your Account
       </a>
@@ -200,7 +208,8 @@ export const verify_email = async (
   next: NextFunction
 ) => {
   try {
-    const email = req.params.email;
+    const email = req.params?.email;
+    const token = req.params?.token;
 
     if (!email) {
       return res.status(400).json({
@@ -209,8 +218,10 @@ export const verify_email = async (
       });
     }
 
+    const decoded = await verify_email_token(token);
+
     const updatedUser = await User.findOneAndUpdate(
-      { email: email },
+      { email: email, _id: decoded },
       { isEmailVerified: true },
       { new: true }
     );

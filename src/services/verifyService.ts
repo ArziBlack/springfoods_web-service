@@ -9,11 +9,25 @@ export async function verify(req: Request, res: Response, next: NextFunction) {
       token,
       process.env.SECRET_KEY as string,
       (err: any, user: any) => {
-        if (err) return res.status(403).json("Token cannot be verified!!!");
+        if (err)
+          return res.status(403).json({
+            success: false,
+            message: "Token Cannot be Verified!!!",
+          });
         next();
-      },
+      }
     );
   } else {
-    return res.status(401).json("You are not Authenticated");
+    return res.status(401).json({
+      success: false,
+      message: "You are not Authenticated",
+    });
   }
+}
+
+export async function verify_email_token(token: string) {
+  const decoded = (await jwt.verify(token, process.env.JWT_SECRET)) as {
+    userId: string;
+  };
+  return decoded;
 }
