@@ -6,6 +6,7 @@
 
 import { Request, Response, Router } from "express";
 import authRoute from "./auth.route";
+import categoryRoute from "./category.route";
 
 const router = Router();
 
@@ -21,7 +22,7 @@ router.get("/health-check", (_req: Request, res: Response) =>
 /** mount all user authenication routes */
 router.use("/api/auth", authRoute);
 
-/** mount all user authenication routes */
-// router.use("/api/auth", authRoute);
+/** mount all protected categories routes */
+router.use("/api/user", categoryRoute);
 
 export default router;
