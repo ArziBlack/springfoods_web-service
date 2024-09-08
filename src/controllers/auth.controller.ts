@@ -9,6 +9,12 @@ import {
 } from "../services/validation/authValidator";
 import { isPasswordValid } from "../utils/cryptoJS";
 import { signToken, TokenPayload } from "../services/jwtService";
+import {
+  ISignupRequest,
+  ISignupResponse,
+  ISigninRequest,
+} from "../interfaces/auth";
+import { ApiErrorResponse, ApiResponse } from "../typings/response";
 
 // SIGNUP CUSTOMER
 export const signup_customer = async (
@@ -91,7 +97,7 @@ export const signin_customer = async (
 
     const user = await User.findOne({
       email: req.body.email,
-    }).populate("contact");
+    }).populate("Contact");
     if (!user) {
       return res.status(404).json({
         success: false,

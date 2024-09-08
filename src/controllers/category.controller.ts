@@ -8,7 +8,7 @@ export const create_category = async (
   res: TypedResponse<
     ICategoryResponse | ApiErrorResponse | ApiResponse<ICategoryResponse>
   >,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { error } = categoryValidationSchema.validate(req.body, {
@@ -49,6 +49,6 @@ export const create_category = async (
     };
     res.status(201).json(successResponse);
   } catch (error) {
-        next(error);
+    next(error);
   }
 };

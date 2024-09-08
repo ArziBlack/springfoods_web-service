@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from "express";
+import { ApiErrorResponse } from "../typings/response";
 
 export const errorHandler = (
   err: unknown,
   req: Request,
   res: Response<ApiErrorResponse>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   console.error(err);
 

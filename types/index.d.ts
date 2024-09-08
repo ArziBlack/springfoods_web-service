@@ -1,4 +1,4 @@
-export interface ISignupRequest {
+interface ISignupRequest {
   password: string;
   role: "user" | "admin" | "vendor";
   gender: "male" | "female" | "non-binary" | "prefer not to say";
@@ -17,9 +17,9 @@ export interface ISignupRequest {
   country: string;
 }
 
-export interface ISignupResponse {}
+interface ISignupResponse {}
 
-export interface ISigninRequest {
+interface ISigninRequest {
   email: string;
   password: string;
 }

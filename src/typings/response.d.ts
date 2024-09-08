@@ -1,12 +1,12 @@
-type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse;
+export type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse;
 
-interface ApiSuccessResponse<T> {
+export interface ApiSuccessResponse<T> {
   success: true;
   message: string;
   data: T;
 }
 
-interface ApiErrorResponse {
+export interface ApiErrorResponse {
   success: false;
   message: string;
   errors?: Record<string, string[]> | unknown;
