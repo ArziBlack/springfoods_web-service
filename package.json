@@ -11,7 +11,7 @@
     "server": "npm run format:fix && nodemon server.js",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
-     "cli": "ts-node src/commands/authCli.ts"
+    "cli": "ts-node src/commands/authCli.ts"
   },
   "repository": {
     "type": "git",
@@ -56,6 +56,7 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.6.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.9.15"
   }
 }

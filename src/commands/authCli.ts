@@ -6,6 +6,7 @@ import { User } from "../models/user.model";
 import { connectDB } from "../config/db";
 import { green } from "colors";
 import { signin_customer } from "../controllers/auth.controller";
+import { sendEmail } from "../services/emailService";
 
 const program = new Command();
 
@@ -85,6 +86,18 @@ program
         head: ["Field", "Value"],
         colWidths: [25, 50],
       });
+
+      const emailHtml = `
+      <h1>Welcome to Spring Foods</h1>
+      <p>Hi ${savedContact.first_name},</p>
+      <p>Thank you for signing up. We're excited to have you on board!</p>
+    `;
+
+    await sendEmail({
+      to: options.email,
+      subject: "Welcome to BlackMarket!",
+      html: emailHtml,
+    });
 
       table.push(
         ["ID", savedUser._id],

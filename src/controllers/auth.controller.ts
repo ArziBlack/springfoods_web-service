@@ -15,6 +15,7 @@ import {
   ISigninRequest,
 } from "../interfaces/auth";
 import { ApiErrorResponse, ApiResponse } from "../typings/response";
+import { sendEmail } from "../services/emailService";
 
 // SIGNUP CUSTOMER
 export const signup_customer = async (
@@ -58,6 +59,18 @@ export const signup_customer = async (
     });
 
     const savedUser = await user.save();
+
+    const emailHtml = `
+      <h1>Welcome to Spring Foods</h1>
+      <p>Hi ${savedContact.first_name},</p>
+      <p>Thank you for signing up. We're excited to have you on board!</p>
+    `;
+
+    await sendEmail({
+      to: req.body.email,
+      subject: "Welcome to BlackMarket!",
+      html: emailHtml,
+    });
 
     const response: ApiResponse<ISignupResponse> = {
       success: true,
