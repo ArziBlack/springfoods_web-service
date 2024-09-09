@@ -20,6 +20,7 @@ interface IProductRequest {
     dimensions: IDimensions;
     sizes: string[];
     is_available?: boolean;
+    // reviews?: string[];
     tags: string[];
     vendor_id: string;
 }

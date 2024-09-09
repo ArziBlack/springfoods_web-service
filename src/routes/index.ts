@@ -6,7 +6,9 @@
 
 import { Request, Response, Router } from "express";
 import authRoute from "./auth.route";
+import adminRoute from "./admin.route";
 import categoryRoute from "./category.route";
+import productRoute from "./product.route";
 
 const router = Router();
 
@@ -22,7 +24,13 @@ router.get("/health-check", (_req: Request, res: Response) =>
 /** mount all user authenication routes */
 router.use("/api/auth", authRoute);
 
+/** mount all admin authenication routes */
+router.use("/api/lovette/admin", adminRoute);
+
 /** mount all protected categories routes */
 router.use("/api/user", categoryRoute);
+
+/** mount all protected products routes */
+router.use("/api/products", productRoute);
 
 export default router;
