@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import { magenta, red } from "colors";
 
 dotenv.config();
 
@@ -27,9 +28,9 @@ export const sendEmail = async (mailOptions: MailOptions) => {
 
   try {
     await transporter.sendMail(mail);
-    console.log("Email sent successfully");
+    console.log(magenta("Email sent successfully"));
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.log(red("Failed to send email"));
     throw new Error("Failed to send email");
   }
 };
