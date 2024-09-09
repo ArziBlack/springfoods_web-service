@@ -248,3 +248,42 @@ export const update_product = async (
     next(error);
   }
 };
+
+// DELETE A PRODUCT
+export const delete_product = async (
+  req: TypedRequest,
+  res: TypedResponse<ApiResponse<null>>,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "'id' param cannot be null or empty!!!",
+      });
+    }
+
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: `No product found with ID: ${id}`,
+      });
+    }
+
+    await Product.findByIdAndDelete(id);
+
+    const successResponse: ApiResponse<null> = {
+      success: true,
+      message: "Product deleted successfully",
+      data: null,
+    };
+
+    res.status(200).json(successResponse);
+  } catch (error) {
+    next(error);
+  }
+};

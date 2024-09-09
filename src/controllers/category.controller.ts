@@ -72,7 +72,7 @@ export const get_all_categories = async (
   }
 };
 
-// GET A CATEGORY
+// GET A CATEGORY BY NAME
 export const get_one_category = async (
   req: Request,
   res: Response,
