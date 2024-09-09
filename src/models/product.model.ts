@@ -2,7 +2,8 @@ import { Schema, model, Types } from "mongoose";
 
 const productSchema = new Schema(
   {
-    category_id: { type: Types.ObjectId, ref: "Category", required: true },
+    category_id: { type: String, required: true },
+    category: { type: Types.ObjectId, ref: "Category", required: true },
     name: { type: String, required: true },
     featured: { type: Boolean, default: false },
     price: { type: Number, required: true },
