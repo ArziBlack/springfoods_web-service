@@ -16,3 +16,6 @@ PUT /products/update/60c72b2f9b1e8b001c8e4f24
   "price": 1200,
   "stock": 30
 }
+
+<!-- DELETE A PRODUCT -->
+DELETE /products/60c72b2f9b1e8b001c8e4f24

@@ -37,6 +37,7 @@ router.route("/:name").get(verify, get_one_category);
 // GET ALL CATEGORIES
 router.route("/").get(verify, get_all_categories);
 
+
 /** ***************************************************** */
 /** **************ADMIN PRODUCT ENDPOINTS**************** */
 /** ***************************************************** */
