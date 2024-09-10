@@ -4,13 +4,12 @@ import { connectDB } from "../config/db";
 import { Category } from "../models/category.model";
 import { blue, green, magenta, red } from "colors";
 import { grey } from "colors";
-import { get_one_category } from "../controllers/category.controller";
-import { res } from "../utils/http";
 
 const program = new Command();
 
+// CREATE CATEGORY
 program
-  .command("create-category")
+  .command("create")
   .description("Create a Category")
   .requiredOption(" --name <name>", "category name")
   .requiredOption("--image <image>", "category image")
@@ -36,8 +35,8 @@ program
 
       table.push(
         ["name", saved_category.name],
-        ["name", saved_category.image],
-        ["name", saved_category.slug]
+        ["image", saved_category.image],
+        ["slug", saved_category.slug]
       );
 
       console.log(table.toString());
@@ -52,8 +51,9 @@ program
     }
   });
 
+// GET ALL CATEGORIES...
 program
-  .command("get-categories")
+  .command("get")
   .description("Fetch all categories...")
   .action(async () => {
     try {
@@ -62,7 +62,7 @@ program
       await connectDB();
       console.log(grey("updating entries..."));
       const categories = await Category.find();
-      console.table(categories);
+      console.log(categories);
     } catch (error) {
       console.log(error);
       if (error instanceof Error) {
@@ -74,20 +74,22 @@ program
     }
   });
 
+// GET A CATEGORY
 program
-  .command("cat-name")
+  .command("get-id")
   .description("get a category by name")
   .option("--name <string>", "category name")
   .action(async (options) => {
     await connectDB();
 
+    const name = options.name;
     const req = {
-      params: { options },
+      params: { name },
     };
-
-    const next = () => {};
-
-    await get_one_category(req as any, res as any, next as any);
+    console.log("params: ", grey(options.name));
+    console.log("fetching category called ", grey(name));
+    const all = await Category.findOne({ name: name });
+    console.log(all);
   });
 
 program.parse(process.argv);

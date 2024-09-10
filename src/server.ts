@@ -1,12 +1,12 @@
+import { errorHandler } from "./middleware/errorHandler";
 import express, { Application, json } from "express";
 import { NODE_ENV, PORT } from "./constants/conn";
 import { connectDB } from "./config/db";
 import routes from "./routes/index";
 import morgan from "morgan";
 import dotenv from "dotenv";
-import cors from "cors";
 import colors from "colors";
-import { errorHandler } from "./middleware/errorHandler";
+import cors from "cors";
 
 dotenv.config();
 
@@ -30,6 +30,8 @@ application.use(errorHandler);
 application.use("/v1", routes);
 application.listen(PORT, () => {
   console.log(
-    colors.bgBlue(`Spring Foods Web service is running on port ${PORT}`),
+    colors.bgBlue.underline(
+      `Spring Foods Web service is running on port ${PORT}`
+    )
   );
 });

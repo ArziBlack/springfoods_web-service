@@ -1,10 +1,10 @@
-interface ICreateCategory {
+export interface ICreateCategory {
   name: string;
   image: string;
   slug: string;
 }
 
-interface ICategoryResponse {
+export interface ICategoryResponse {
   name: string;
   image: string;
   slug: string;

@@ -98,6 +98,15 @@ npm run cli -- login-user \
 ### Output:
 Upon successful login, the user details will be displayed in a table format, along with a token if the login is successful.
 
+
+## `create product` command
+
+## Description
+
+## Usage
+```bash
+npm run cli:prod -- create --category_id "66e04de0d984a3af33ded077" --name "Bed Stand" --featured false --price "1200" --discount "10" --final_price "1500" --sku "123444466789" --stock "2" --product_image "https://xnxx.com" --desc "premium bed stand with side rest and adjustable legs..." --weight 200, --height 20 --width 300 --depth 40 --size_1 30 --size_2 50 --tag_1 "gaming" --tag_2 "chair" 
+```
 ---
 
 ### Common Errors:

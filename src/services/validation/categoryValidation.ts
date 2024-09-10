@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { ICreateCategory } from "../../interfaces/category";
 
 export const categoryValidationSchema = Joi.object<ICreateCategory>({
   name: Joi.string().min(2).max(50).required().messages({

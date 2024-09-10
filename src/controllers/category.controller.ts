@@ -3,6 +3,7 @@ import { TypedRequest, TypedResponse } from "../typings";
 import { Category } from "../models/category.model";
 import { categoryValidationSchema } from "../services/validation/categoryValidation";
 import { ApiErrorResponse, ApiResponse } from "../typings/response";
+import { ICategoryResponse, ICreateCategory } from "../interfaces/category";
 
 // CREATE A CATEGORY
 export const create_category = async (

@@ -5,6 +5,7 @@ import { CartItem } from "../models/cart_item.model";
 import { TypedRequest, TypedResponse } from "../typings";
 import { mapCartDocumentToResponse } from "../helpers/cart";
 import { ApiErrorResponse, ApiResponse } from "../typings/response";
+import { cartValidatorSchema } from "../services/validation/cartValidator";
 
 // ADD TO CART
 export const add_to_cart = async (
@@ -14,12 +15,26 @@ export const add_to_cart = async (
 ) => {
   try {
     const user_id = req.params.id;
+
     if (!user_id) {
       return res.status(400).json({
         success: false,
         message: "'id' param cannot be null or empty!!!",
       });
     }
+
+    const { error } = cartValidatorSchema.validate(req.body, {
+      abortEarly: false,
+    });
+
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors: error.details.map((detail) => detail.message),
+      });
+    }
+
     const { items, price, total } = req.body;
 
     let cart = await Cart.findOne({ user_id: user_id });
@@ -73,6 +88,7 @@ export const get_my_cart = async (
         message: "'id' param cannot be null or empty!!!",
       });
     }
+
     const my_cart = await Cart.findOne({ user_id: cart_id });
 
     if (!my_cart) {

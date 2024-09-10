@@ -15,6 +15,7 @@ export const create_product = async (
     const { error } = productValidationSchema.validate(req.body, {
       abortEarly: false,
     });
+
     if (error) {
       return res.status(400).json({
         success: false,
@@ -34,6 +35,7 @@ export const create_product = async (
       message: "Categories fetched successfully",
       data: product_response,
     };
+    
     res.status(201).json(successResponse);
   } catch (error) {
     next(error);
