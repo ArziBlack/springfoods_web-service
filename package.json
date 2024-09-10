@@ -11,7 +11,10 @@
     "server": "npm run format:fix && nodemon server.js",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore .",
-    "cli:auth": "ts-node src/commands/authCli.ts"
+    "cli:user": "ts-node src/commands/authCli.ts",
+    "cli:cat": "ts-node src/commands/categoryCli.ts",
+    "cli:prod": "ts-node src/commands/productCli.ts",
+    "cli:review": "ts-node src/commands/reviewCLI.ts"
   },
   "repository": {
     "type": "git",

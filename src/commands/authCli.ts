@@ -4,9 +4,10 @@ import Table from "cli-table3";
 import { Contact } from "../models/contact.model";
 import { User } from "../models/user.model";
 import { connectDB } from "../config/db";
-import { green } from "colors";
+import { blue, green, magenta, underline, white } from "colors";
 import { signin_customer } from "../controllers/auth.controller";
 import { sendEmail } from "../services/emailService";
+import { res } from "../utils/http";
 
 const program = new Command();
 
@@ -17,7 +18,10 @@ program
   .requiredOption("--last_name <last_name>", "Last name of the user")
   .requiredOption("--email <email>", "Email address of the user")
   .requiredOption("--phone_number <phone_number>", "Phone number of the user")
-  //   .requiredOption('--date_of_birth <date_of_birth>', 'Date of birth of the user (YYYY-MM-DD)')
+  .requiredOption(
+    "--date_of_birth <date_of_birth>",
+    "Date of birth of the user (YYYY-MM-DD)"
+  )
   .requiredOption("--password <password>", "Password for the user")
   .requiredOption(
     "--gender <gender>",
@@ -35,7 +39,18 @@ program
   .requiredOption("--country <country>", "Country of the user")
   .action(async (options) => {
     try {
+      console.log(blue("Starting SPRING FOODS CLI server..."));
+
+      console.log(
+        white(underline("getting required params from the console..."))
+      );
+
+      console.table(options);
+
+      console.log(magenta("loading up database..."));
+
       await connectDB();
+
       const table_1 = new Table({
         head: ["Field", "Value"],
         colWidths: [25, 50],
@@ -53,7 +68,16 @@ program
         street: options.street,
       });
 
+      console.log(
+        magenta(
+          "saving user contact details to the database..., this might take a while..."
+        )
+      );
+
       const savedContact = await contact.save();
+
+      console.log(magenta("saving succeeded to the database..."));
+
       table_1.push(
         ["email", savedContact.email],
         ["first_name", savedContact.first_name],
@@ -80,6 +104,12 @@ program
         password: CryptoJS.SHA256(options.password).toString(),
         isEmailVerified: options.isEmailVerified === "true",
       });
+
+      console.log(
+        magenta(
+          "saving user and contact details to user..., this process might take a while..."
+        )
+      );
 
       const savedUser: any = await user.save();
       const table = new Table({
@@ -123,6 +153,10 @@ program
   </div>
 `;
 
+      console.log(
+        magenta("starting up the email service..., hold on for a second...")
+      );
+
       await sendEmail({
         to: options.email,
         subject: "Welcome to Spring Foods!",
@@ -160,23 +194,17 @@ program
   .option("--email <string>", "User's email address")
   .option("--password <string>", "User's password")
   .action(async (options) => {
+    console.log(blue("Starting the server..."));
+    console.log(magenta("loading up database..."));
     await connectDB();
-
+    
     const { email, password } = options;
-
+    
     const req = {
       body: { email, password },
     };
-
-    const res = {
-      status: (statusCode: number) => ({
-        json: (response: object) => {
-          console.log(`Status: ${statusCode}`);
-          console.table(response);
-        },
-      }),
-    };
-
+    
+    console.log(magenta("trying to sign you in..."));
     await signin_customer(req as any, res as any);
   });
 

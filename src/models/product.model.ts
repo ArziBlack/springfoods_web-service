@@ -21,6 +21,7 @@ const productSchema = new Schema(
     },
     sizes: [{ type: String }],
     average_rating: { type: Number, default: 0 },
+    reviews: [{type: Types.ObjectId, ref: "Review"}],
     total_reviews: { type: Number, default: 0 },
     is_available: { type: Boolean, default: true },
     tags: [{ type: String }],
