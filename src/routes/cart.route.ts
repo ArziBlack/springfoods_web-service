@@ -8,7 +8,7 @@ const router = Router();
 router.route("/add/:cart_id").post(verify, add_to_cart);
 
 // GET MY CART
-router.route("/").get(verify, get_my_cart);
+router.route("/:cart_id").get(verify, get_my_cart);
 
 // REMOVE FROM CART
 

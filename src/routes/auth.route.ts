@@ -16,4 +16,10 @@ router.route("/signin").post(signin_customer);
 // CUSTOMER EMAIL VERIFICATION
 router.route("/verify/:email/:token").get(verify_email);
 
+// REFRESH LOGIN
+
+// FORGOT PASSWORD
+
+// VERIFY PASSWORD RESET
+
 export default router;
