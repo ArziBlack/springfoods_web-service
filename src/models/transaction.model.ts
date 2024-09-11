@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const paymentSchema = new Schema(
+const transactionSchema = new Schema(
   {
     order_id: {
       type: Schema.Types.ObjectId,
@@ -45,4 +45,4 @@ const paymentSchema = new Schema(
   { timestamps: true },
 );
 
-export const Payment = model("Payment", paymentSchema);
+export const Transcation = model("Transcation", transactionSchema);
