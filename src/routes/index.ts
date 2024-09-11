@@ -5,10 +5,10 @@
  * ************************************************************************************** */
 
 import { Request, Response, Router } from "express";
-import authRoute from "./auth.route";
-import adminRoute from "./admin.route";
-import categoryRoute from "./category.route";
-import productRoute from "./product.route";
+import authRoute from "./auth.routes";
+import adminRoute from "./admin.routes";
+import categoryRoute from "./category.routes";
+import productRoute from "./product.routes";
 
 const router = Router();
 

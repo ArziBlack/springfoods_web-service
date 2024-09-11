@@ -106,7 +106,7 @@ export const signup_customer = async (
 
     await sendEmail({
       to: req.body.email,
-      subject: "Welcome to BlackMarket!",
+      subject: "Spring Foods Onboarding 👍😊",
       html: emailHtml,
     });
 

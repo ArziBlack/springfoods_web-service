@@ -7,4 +7,6 @@ interface IReviewRequest {
   review_content: string;
 }
 
-interface IReviewResponse extends IReviewRequest {}
+interface IReviewResponse extends IReviewRequest {
+  createdAt: Date;
+}

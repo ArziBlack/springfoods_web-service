@@ -9,7 +9,7 @@ import { mapProductDocumentToResponse } from "../helpers/product";
 export const create_product = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse> | ApiErrorResponse>,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { error } = productValidationSchema.validate(req.body, {
@@ -42,11 +42,58 @@ export const create_product = async (
   }
 };
 
+// ADD A REVIEW TO A PRODUCT
+export const add_review_to_a_product = async (
+  req: TypedRequest,
+  res: TypedResponse<ApiResponse<IProductResponse>>,
+  next: NextFunction
+) => {
+  try {
+    const { product_id, user_id } = req.params;
+    const { rating, review_title, review_content } = req.body;
+    const product = await Product.findById(product_id).lean();
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    const review = {
+      user: user_id,
+      product: product_id,
+      rating,
+      review_title,
+      review_content
+    }
+
+    product.reviews.push(review);
+
+    const totalReviews = product.reviews.length;
+    const averageRating = product.reviews.reduce((acc: number, curr: { rating: number }) => acc + curr.rating, 0) / totalReviews;
+
+    product.total_reviews = totalReviews;
+    product.average_rating = averageRating;
+
+    const updatedProduct = await product.save();
+
+    const successResponse: ApiResponse<IProductResponse> = {
+      success: true,
+      message: "Review added successfully",
+      data: updatedProduct,
+    };
+
+    res.status(200).json(successResponse);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // GET ALL PRODUCTS
 export const get_all_products = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse[]>>,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const page = parseInt(req.query.page as string) || 1;
@@ -65,7 +112,7 @@ export const get_all_products = async (
     };
 
     const product_response: IProductResponse[] = products.map(
-      mapProductDocumentToResponse,
+      mapProductDocumentToResponse
     );
 
     const successResponse: ApiResponse<IProductResponse[]> = {
@@ -85,7 +132,7 @@ export const get_all_products = async (
 export const get_all_products_by_category = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse[]>>,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { name } = req.params;
@@ -98,7 +145,7 @@ export const get_all_products_by_category = async (
     }
 
     const products_by_category = await Product.find({ name: name }).populate(
-      "category",
+      "category"
     );
 
     if (!products_by_category.length) {
@@ -109,7 +156,7 @@ export const get_all_products_by_category = async (
     }
 
     const mappedProducts: IProductResponse[] = products_by_category.map(
-      mapProductDocumentToResponse,
+      mapProductDocumentToResponse
     );
 
     const successResponse: ApiResponse<IProductResponse[]> = {
@@ -128,7 +175,7 @@ export const get_all_products_by_category = async (
 export const get_product_by_ID = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse>>,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { id } = req.params;
@@ -168,7 +215,7 @@ export const get_product_by_ID = async (
 export const get_all_products_by_reviews = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse[]>>,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { sortBy = "total_reviews", order = "desc" } = req.query;
@@ -193,7 +240,7 @@ export const get_all_products_by_reviews = async (
     }
 
     const mappedProducts: IProductResponse[] = products.map(
-      mapProductDocumentToResponse,
+      mapProductDocumentToResponse
     );
 
     const successResponse: ApiResponse<IProductResponse[]> = {
@@ -212,7 +259,7 @@ export const get_all_products_by_reviews = async (
 export const update_product = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse>>,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { id } = req.params;
@@ -266,7 +313,7 @@ export const update_product = async (
 export const delete_product = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<null>>,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { id } = req.params;
