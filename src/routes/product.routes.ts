@@ -15,6 +15,6 @@ router.route("/all").get(verify, get_all_products);
 router.route("/category/:id").get(verify, get_all_products_by_category);
 
 // GET PRODUCTS BY REVIEWS
-router.route("/reviews").get(verify, get_all_products_by_reviews);
+router.route("/reviews/:user_id/:product_id").get(verify, get_all_products_by_reviews);
 
 export default router;

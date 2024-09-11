@@ -18,6 +18,12 @@ export const mapProductDocumentToResponse = (
     weight: product.weight,
     dimensions: product.dimensions,
     sizes: product.sizes,
+    reviews: product.reviews.map((review: any) => ({
+      user: review.user.toString(),
+      rating: review.rating,
+      review_title: review.review_title,
+      review_content: review.review_content
+    })),
     average_rating: product.average_rating,
     total_reviews: product.total_reviews,
     is_available: product.is_available,

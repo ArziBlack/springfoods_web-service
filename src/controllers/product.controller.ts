@@ -1,4 +1,4 @@
-import { NextFunction } from "express";
+import { NextFunction, Response } from "express";
 import { TypedRequest, TypedResponse } from "../typings";
 import { ApiErrorResponse, ApiResponse } from "../typings/response";
 import { productValidationSchema } from "../services/validation/productValidator";
@@ -45,17 +45,29 @@ export const create_product = async (
 // ADD A REVIEW TO A PRODUCT
 export const add_review_to_a_product = async (
   req: TypedRequest,
-  res: TypedResponse<ApiResponse<IProductResponse>>,
+  res: Response,
   next: NextFunction
 ) => {
   try {
     const { product_id, user_id } = req.params;
     const { rating, review_title, review_content } = req.body;
-    const product = await Product.findById(product_id).lean();
+
+    const product = await Product.findById(product_id);
     if (!product) {
       return res.status(404).json({
         success: false,
         message: "Product not found",
+      });
+    }
+
+    const existingReviewIndex = product.reviews.findIndex(
+      (review) => review.user.toString() === user_id
+    );
+
+    if (existingReviewIndex !== -1) {
+      return res.status(400).json({
+        success: false,
+        message: "User has already reviewed this product",
       });
     }
 
@@ -64,23 +76,22 @@ export const add_review_to_a_product = async (
       product: product_id,
       rating,
       review_title,
-      review_content
-    }
+      review_content,
+    };
 
     product.reviews.push(review);
 
     const totalReviews = product.reviews.length;
-    const averageRating = product.reviews.reduce((acc: number, curr: { rating: number }) => acc + curr.rating, 0) / totalReviews;
-
     product.total_reviews = totalReviews;
-    product.average_rating = averageRating;
 
     const updatedProduct = await product.save();
+
+    const mapped_data = mapProductDocumentToResponse(updatedProduct);
 
     const successResponse: ApiResponse<IProductResponse> = {
       success: true,
       message: "Review added successfully",
-      data: updatedProduct,
+      data: mapped_data,
     };
 
     res.status(200).json(successResponse);
@@ -88,6 +99,7 @@ export const add_review_to_a_product = async (
     next(error);
   }
 };
+
 
 // GET ALL PRODUCTS
 export const get_all_products = async (
@@ -254,6 +266,45 @@ export const get_all_products_by_reviews = async (
     next(error);
   }
 };
+
+// GET A PRODUCTS WITH REVIEWS
+export const get_all_products_with_reviews = async (req: TypedRequest,
+  res: TypedResponse<ApiResponse<IProductResponse>>,
+  next: NextFunction) => {
+  try {
+    const { product_id } = req.params;
+    if (!product_id) {
+      return res.status(400).json({
+        success: false,
+        message: "'id' param cannot be null or empty!!!",
+      });
+    }
+
+    const product_with_reviews = await Product.findById(product_id)
+      .populate('reviews.user', 'name email')
+      .exec();
+
+    if (!product_with_reviews) {
+      return res.status(404).json({
+        success: false,
+        message: `No product found with ID: ${product_id}`,
+      });
+    }
+
+    const mappedProduct: IProductResponse =
+      mapProductDocumentToResponse(product_with_reviews);
+
+    const successResponse: ApiResponse<IProductResponse> = {
+      success: true,
+      message: "Product updated successfully",
+      data: mappedProduct,
+    };
+
+    res.status(200).json(successResponse);
+  } catch (error) {
+    next(error)
+  }
+}
 
 // UPDATE A PRODUCT
 export const update_product = async (

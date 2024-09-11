@@ -1,8 +1,9 @@
 import { Schema, model, Types } from "mongoose";
+import { reviewSchema } from "./review.model";
 
 const productSchema = new Schema(
   {
-    category_id: { type: String, required: true },
+    category_id: { type: Types.ObjectId, ref: "Category", required: true },
     category: { type: Types.ObjectId, ref: "Category", required: true },
     name: { type: String, required: true },
     featured: { type: Boolean, default: false },
@@ -21,7 +22,7 @@ const productSchema = new Schema(
     },
     sizes: [{ type: String }],
     average_rating: { type: Number, default: 0 },
-    reviews: [{ user: { type: Types.ObjectId, ref: "User" } }],
+    reviews: [reviewSchema],
     total_reviews: { type: Number, default: 0 },
     is_available: { type: Boolean, default: true },
     tags: [{ type: String }],
