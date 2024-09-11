@@ -20,17 +20,17 @@ program
   .requiredOption("--phone_number <phone_number>", "Phone number of the user")
   .requiredOption(
     "--date_of_birth <date_of_birth>",
-    "Date of birth of the user (YYYY-MM-DD)"
+    "Date of birth of the user (YYYY-MM-DD)",
   )
   .requiredOption("--password <password>", "Password for the user")
   .requiredOption(
     "--gender <gender>",
-    "Gender of the user (male, female, non-binary, prefer not to say)"
+    "Gender of the user (male, female, non-binary, prefer not to say)",
   )
   .requiredOption("--role <role>", "Role of the user (user, admin, vendor)")
   .requiredOption(
     "--profile_image <profile_image>",
-    "Profile image URL of the user"
+    "Profile image URL of the user",
   )
   .requiredOption("--zip_code <zip_code>", "ZIP code of the user")
   .requiredOption("--street <street>", "Street address of the user")
@@ -42,7 +42,7 @@ program
       console.log(blue("Starting SPRING FOODS CLI server..."));
 
       console.log(
-        white(underline("getting required params from the console..."))
+        white(underline("getting required params from the console...")),
       );
 
       console.table(options);
@@ -70,8 +70,8 @@ program
 
       console.log(
         magenta(
-          "saving user contact details to the database..., this might take a while..."
-        )
+          "saving user contact details to the database..., this might take a while...",
+        ),
       );
 
       const savedContact = await contact.save();
@@ -87,7 +87,7 @@ program
         ["city", savedContact.city],
         ["state", savedContact.state],
         ["country", savedContact.country],
-        ["street", savedContact.street]
+        ["street", savedContact.street],
       );
 
       console.log(table_1.toString());
@@ -107,8 +107,8 @@ program
 
       console.log(
         magenta(
-          "saving user and contact details to user..., this process might take a while..."
-        )
+          "saving user and contact details to user..., this process might take a while...",
+        ),
       );
 
       const savedUser: any = await user.save();
@@ -154,7 +154,7 @@ program
 `;
 
       console.log(
-        magenta("starting up the email service..., hold on for a second...")
+        magenta("starting up the email service..., hold on for a second..."),
       );
 
       await sendEmail({
@@ -176,7 +176,7 @@ program
         ["Street", savedUser.street],
         ["City", savedUser.city],
         ["State", savedUser.state],
-        ["Country", savedUser.country]
+        ["Country", savedUser.country],
       );
 
       console.log(table.toString());
@@ -197,13 +197,13 @@ program
     console.log(blue("Starting the server..."));
     console.log(magenta("loading up database..."));
     await connectDB();
-    
+
     const { email, password } = options;
-    
+
     const req = {
       body: { email, password },
     };
-    
+
     console.log(magenta("trying to sign you in..."));
     await signin_customer(req as any, res as any);
   });

@@ -31,7 +31,7 @@ application.use("/v1", routes);
 application.listen(PORT, () => {
   console.log(
     colors.bgBlue.underline(
-      `Spring Foods Web service is running on port ${PORT}`
-    )
+      `Spring Foods Web service is running on port ${PORT}`,
+    ),
   );
 });

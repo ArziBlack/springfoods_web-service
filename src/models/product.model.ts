@@ -28,7 +28,7 @@ const productSchema = new Schema(
     related_products: [{ type: Types.ObjectId, ref: "Product" }],
     vendor_id: { type: Types.ObjectId, ref: "User", required: true },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Product = model("Product", productSchema);

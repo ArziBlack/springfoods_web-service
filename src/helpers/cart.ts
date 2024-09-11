@@ -8,4 +8,3 @@ export const mapCartDocumentToResponse = (cart: any): ICart => {
     total: cart.total,
   };
 };
-

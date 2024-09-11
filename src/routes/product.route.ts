@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { get_all_products, get_all_products_by_category, get_all_products_by_reviews } from "../controllers/product.controller";
+import {
+  get_all_products,
+  get_all_products_by_category,
+  get_all_products_by_reviews,
+} from "../controllers/product.controller";
 import { verify } from "../services/verifyService";
 
 const router = Router();

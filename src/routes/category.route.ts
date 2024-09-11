@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { get_all_categories, get_one_category } from "../controllers/category.controller";
+import {
+  get_all_categories,
+  get_one_category,
+} from "../controllers/category.controller";
 import { verify } from "../services/verifyService";
 
 const router = Router();

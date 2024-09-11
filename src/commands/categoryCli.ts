@@ -36,7 +36,7 @@ program
       table.push(
         ["name", saved_category.name],
         ["image", saved_category.image],
-        ["slug", saved_category.slug]
+        ["slug", saved_category.slug],
       );
 
       console.log(table.toString());

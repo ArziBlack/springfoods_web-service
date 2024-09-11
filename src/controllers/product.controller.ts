@@ -9,7 +9,7 @@ import { mapProductDocumentToResponse } from "../helpers/product";
 export const create_product = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse> | ApiErrorResponse>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { error } = productValidationSchema.validate(req.body, {
@@ -35,7 +35,7 @@ export const create_product = async (
       message: "Categories fetched successfully",
       data: product_response,
     };
-    
+
     res.status(201).json(successResponse);
   } catch (error) {
     next(error);
@@ -46,10 +46,9 @@ export const create_product = async (
 export const get_all_products = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse[]>>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
     const skip = (page - 1) * limit;
@@ -65,13 +64,15 @@ export const get_all_products = async (
       hasPrevPage: page > 1,
     };
 
-    const product_response: IProductResponse[] = products.map(mapProductDocumentToResponse);
+    const product_response: IProductResponse[] = products.map(
+      mapProductDocumentToResponse,
+    );
 
     const successResponse: ApiResponse<IProductResponse[]> = {
       success: true,
       message: "Categories fetched successfully",
       data: product_response,
-      pagination: pagination
+      pagination: pagination,
     };
 
     res.status(200).json(successResponse);
@@ -84,7 +85,7 @@ export const get_all_products = async (
 export const get_all_products_by_category = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse[]>>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { name } = req.params;
@@ -96,7 +97,9 @@ export const get_all_products_by_category = async (
       });
     }
 
-    const products_by_category = await Product.find({ name: name }).populate('category');
+    const products_by_category = await Product.find({ name: name }).populate(
+      "category",
+    );
 
     if (!products_by_category.length) {
       return res.status(404).json({
@@ -105,7 +108,9 @@ export const get_all_products_by_category = async (
       });
     }
 
-    const mappedProducts: IProductResponse[] = products_by_category.map(mapProductDocumentToResponse);
+    const mappedProducts: IProductResponse[] = products_by_category.map(
+      mapProductDocumentToResponse,
+    );
 
     const successResponse: ApiResponse<IProductResponse[]> = {
       success: true,
@@ -123,7 +128,7 @@ export const get_all_products_by_category = async (
 export const get_product_by_ID = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse>>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { id } = req.params;
@@ -144,7 +149,8 @@ export const get_product_by_ID = async (
       });
     }
 
-    const mappedProduct: IProductResponse = mapProductDocumentToResponse(product);
+    const mappedProduct: IProductResponse =
+      mapProductDocumentToResponse(product);
 
     const successResponse: ApiResponse<IProductResponse> = {
       success: true,
@@ -162,31 +168,33 @@ export const get_product_by_ID = async (
 export const get_all_products_by_reviews = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse[]>>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    const { sortBy = 'total_reviews', order = 'desc' } = req.query;
+    const { sortBy = "total_reviews", order = "desc" } = req.query;
 
-    const validSortFields = ['total_reviews', 'average_rating'];
+    const validSortFields = ["total_reviews", "average_rating"];
     if (!validSortFields.includes(sortBy as string)) {
       return res.status(400).json({
         success: false,
-        message: `'sortBy' must be one of the following: ${validSortFields.join(', ')}`,
+        message: `'sortBy' must be one of the following: ${validSortFields.join(", ")}`,
       });
     }
 
     const products = await Product.find()
-      .sort({ [sortBy as string]: order === 'desc' ? -1 : 1 })
+      .sort({ [sortBy as string]: order === "desc" ? -1 : 1 })
       .limit(10);
 
     if (!products.length) {
       return res.status(404).json({
         success: false,
-        message: 'No products found based on reviews or ratings',
+        message: "No products found based on reviews or ratings",
       });
     }
 
-    const mappedProducts: IProductResponse[] = products.map(mapProductDocumentToResponse);
+    const mappedProducts: IProductResponse[] = products.map(
+      mapProductDocumentToResponse,
+    );
 
     const successResponse: ApiResponse<IProductResponse[]> = {
       success: true,
@@ -204,7 +212,7 @@ export const get_all_products_by_reviews = async (
 export const update_product = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse>>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { id } = req.params;
@@ -216,7 +224,9 @@ export const update_product = async (
       });
     }
 
-    const { error } = productValidationSchema.validate(req.body, { abortEarly: false });
+    const { error } = productValidationSchema.validate(req.body, {
+      abortEarly: false,
+    });
     if (error) {
       return res.status(400).json({
         success: false,
@@ -237,7 +247,8 @@ export const update_product = async (
       });
     }
 
-    const mappedProduct: IProductResponse = mapProductDocumentToResponse(updatedProduct);
+    const mappedProduct: IProductResponse =
+      mapProductDocumentToResponse(updatedProduct);
 
     const successResponse: ApiResponse<IProductResponse> = {
       success: true,
@@ -255,7 +266,7 @@ export const update_product = async (
 export const delete_product = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<null>>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { id } = req.params;

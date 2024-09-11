@@ -21,7 +21,7 @@ import { verify_email_token } from "../services/verifyService";
 // SIGNUP CUSTOMER
 export const signup_customer = async (
   req: TypedRequest<ISignupRequest>,
-  res: TypedResponse<ISignupResponse | ApiErrorResponse>
+  res: TypedResponse<ISignupResponse | ApiErrorResponse>,
 ) => {
   try {
     const { error } = signupSchema.validate(req.body, { abortEarly: false });
@@ -133,7 +133,7 @@ export const signup_customer = async (
 // SIGNIN CUSTOMER
 export const signin_customer = async (
   req: TypedRequest<ISigninRequest>,
-  res: Response
+  res: Response,
 ) => {
   try {
     const { error } = signinSchema.validate(req.body, { abortEarly: false });
@@ -205,7 +205,7 @@ export const signin_customer = async (
 export const verify_email = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<null>>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const email = req.params?.email;
@@ -223,7 +223,7 @@ export const verify_email = async (
     const updatedUser = await User.findOneAndUpdate(
       { email: email, _id: decoded },
       { isEmailVerified: true },
-      { new: true }
+      { new: true },
     );
 
     if (!updatedUser) {

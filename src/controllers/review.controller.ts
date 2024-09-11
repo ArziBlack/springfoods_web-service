@@ -10,7 +10,7 @@ import { mapReviewDocumentToResponse } from "../helpers/review";
 export const create_review = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse> | ApiErrorResponse>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     // "id" as Product ID
@@ -54,7 +54,7 @@ export const create_review = async (
       {
         total_reviews: total_reviews,
       },
-      { new: true }
+      { new: true },
     );
 
     if (!update_product_to_review) {
@@ -71,7 +71,7 @@ export const create_review = async (
       message: "Review successfully created👍😊",
       data: review_response,
     };
-    
+
     res.status(201).json(successResponse);
   } catch (error) {
     next(error);
@@ -82,7 +82,7 @@ export const create_review = async (
 export const get_all_reviews = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<IReviewResponse[]>>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const page = parseInt(req.query.page as string) || 1;
@@ -101,7 +101,7 @@ export const get_all_reviews = async (
     };
 
     const review_response: IReviewResponse[] = reviews.map(
-      mapReviewDocumentToResponse
+      mapReviewDocumentToResponse,
     );
 
     const successResponse: ApiResponse<IReviewResponse[]> = {

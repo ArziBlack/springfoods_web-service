@@ -15,7 +15,7 @@ export async function verify(req: Request, res: Response, next: NextFunction) {
             message: "Token Cannot be Verified!!!",
           });
         next();
-      }
+      },
     );
   } else {
     return res.status(401).json({

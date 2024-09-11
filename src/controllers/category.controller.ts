@@ -11,7 +11,7 @@ export const create_category = async (
   res: TypedResponse<
     ICategoryResponse | ApiErrorResponse | ApiResponse<ICategoryResponse>
   >,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { error } = categoryValidationSchema.validate(req.body, {
@@ -56,7 +56,7 @@ export const create_category = async (
 export const get_all_categories = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const categories: ICategoryResponse[] = await Category.find();
@@ -77,7 +77,7 @@ export const get_all_categories = async (
 export const get_one_category = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const name = req.params?.name;
@@ -104,7 +104,7 @@ export const get_one_category = async (
 export const update_category = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     if (!req.params.id) {
@@ -124,7 +124,7 @@ export const update_category = async (
       {
         $set: req.body,
       },
-      { new: true }
+      { new: true },
     );
 
     const successResponse: ApiResponse<ICategoryResponse> = {
@@ -142,7 +142,7 @@ export const update_category = async (
 export const delete_a_category = async (
   req: TypedRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     if (!req.params.id) {

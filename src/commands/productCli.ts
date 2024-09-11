@@ -16,7 +16,7 @@ program
   .requiredOption("--price <price>", "initial price for the product")
   .requiredOption(
     "--discount <discount>",
-    "discount percent for the product price"
+    "discount percent for the product price",
   )
   .requiredOption("--final_price <final_price>", "final price for a product")
   .requiredOption("--sku <sku>", "store keeping unit tracking code")
@@ -29,19 +29,19 @@ program
   .requiredOption("--depth <depth>", "depth for the product")
   .requiredOption(
     "--size_1 <size_1>",
-    "sizes for the product 'M' for medium, 'L' for large, 'S' for small"
+    "sizes for the product 'M' for medium, 'L' for large, 'S' for small",
   )
   .requiredOption(
     "--size_2 <size_2>",
-    "sizes for the product 'M' for medium, 'L' for large, 'S' for small"
+    "sizes for the product 'M' for medium, 'L' for large, 'S' for small",
   )
   .requiredOption(
     "--tag_1 <tag_1>",
-    "an array of strings of tags for the product"
+    "an array of strings of tags for the product",
   )
   .requiredOption(
     "--tag_2 <tag_2>",
-    "an array of strings of tags for the product"
+    "an array of strings of tags for the product",
   )
   .action(async (options) => {
     try {
@@ -100,7 +100,7 @@ program
         ["weight", saved.weight.toString()],
         ["dimesions", saved.dimensions.toString()],
         ["sizes", [options.size_1, options.size_2].toString()],
-        ["tags", [options.tag_1, options.tag_2].toString()]
+        ["tags", [options.tag_1, options.tag_2].toString()],
       );
 
       console.log(table.toString());
@@ -131,7 +131,7 @@ program
       console.log(
         "Total products are ",
         green(products_no.toString()),
-        " in number"
+        " in number",
       );
     } catch (error) {
       console.log(error);

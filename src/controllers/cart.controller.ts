@@ -11,7 +11,7 @@ import { cartValidatorSchema } from "../services/validation/cartValidator";
 export const add_to_cart = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<ICart> | ApiErrorResponse>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const user_id = req.params.id;
@@ -49,7 +49,7 @@ export const add_to_cart = async (
           product_id: item.product_id,
           quantity: item.quantity,
           price: item.price,
-        })
+        }),
     );
 
     cart.items.push(...new_cart_items);
@@ -77,7 +77,7 @@ export const add_to_cart = async (
 export const get_my_cart = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<ICart> | ApiErrorResponse>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const cart_id = req.params.cart_id;
