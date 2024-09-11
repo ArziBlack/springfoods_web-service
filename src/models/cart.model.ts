@@ -1,5 +1,6 @@
 import { Schema, model, Types } from "mongoose";
 import { CartItem } from "./cart_item.model";
+import { ICart } from "../interfaces/cart";
 
 const cartSchema = new Schema({
   user_id: { type: Types.ObjectId, ref: "User", required: true },
@@ -8,4 +9,4 @@ const cartSchema = new Schema({
   total: { type: Number, required: true },
 });
 
-export const Cart = model("Cart", cartSchema);
+export const Cart = model<ICart>("Cart", cartSchema);

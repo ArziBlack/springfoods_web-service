@@ -100,6 +100,57 @@ export const add_review_to_a_product = async (
   }
 };
 
+// DELETE A REVIEW FROM A PRODUCT
+export const delete_review_from_a_product = async (
+  req: TypedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { product_id, user_id } = req.params;
+
+    // Find the product
+    const product = await Product.findById(product_id);
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    const existingReviewIndex = product.reviews.findIndex(
+      (review) => review.user.toString() === user_id
+    );
+
+    if (existingReviewIndex === -1) {
+      return res.status(400).json({
+        success: false,
+        message: "Review not found for this user",
+      });
+    }
+
+    product.reviews.splice(existingReviewIndex, 1);
+
+    const totalReviews = product.reviews.length;
+    product.total_reviews = totalReviews;
+
+    const updatedProduct = await product.save();
+
+    const mapped_data = mapProductDocumentToResponse(updatedProduct);
+
+    const successResponse: ApiResponse<IProductResponse> = {
+      success: true,
+      message: "Review deleted successfully",
+      data: mapped_data,
+    };
+
+    res.status(200).json(successResponse);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 
 // GET ALL PRODUCTS
 export const get_all_products = async (

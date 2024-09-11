@@ -59,4 +59,8 @@ router.route("/update/:id").put(verify, update_product);
 // DELETE A PRODUCT
 router.route("/remove/:id").delete(verify, delete_product);
 
+/** ***************************************************** */
+/** **************ADMIN ORDER ENDPOINTS****************** */
+/** ***************************************************** */
+
 export default router;
