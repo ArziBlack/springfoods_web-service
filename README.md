@@ -1,64 +1,82 @@
-"# springfoods_web-service"
 
+---
 
-# server status
-GET /v1/health-check
+# Springfoods Web Service API Documentation
 
-## Auth Routes
-signup
-POST /v1/api/auth/signup
+## Base URL
+```
+https://springfoods-web-service.onrender.com
+```
 
-signin
-POST /v1/api/auth/signin
+## Endpoints
 
-verify email
-GET /v1/api/auth/verify/:email/:token
+### Server Status
+- **GET** `/v1/health-check`
+  - **Description**: Check the status of the server.
 
-# Category (customer)
-all categories
-GET /v1/api/category
+### Auth Routes
+- **POST** `/v1/api/auth/signup`
+  - **Description**: Create a new user account.
 
-category by name
-GET /v1/api/category/:name
+- **POST** `/v1/api/auth/signin`
+  - **Description**: Authenticate a user and return a token.
 
-# Products
-all products
-GET /v1/api/products
+- **GET** `/v1/api/auth/verify/:email/:token`
+  - **Description**: Verify the user's email address using the provided token.
 
-all products under a category name
-GET /v1/api/products/category/:id
+### Category (Customer)
+- **GET** `/v1/api/category`
+  - **Description**: Retrieve all categories.
 
-products by reviews
-GET /v1/api/products/reviews/:product_id
+- **GET** `/v1/api/category/:name`
+  - **Description**: Retrieve a category by its name.
 
-review a product
-POST v1/api/products/review/:user_id/:product_id
+### Products
+- **GET** `/v1/api/products`
+  - **Description**: Retrieve all products.
 
-get product by ID
-GET /v1/api/products/:id
+- **GET** `/v1/api/products/category/:id`
+  - **Description**: Retrieve all products under a specific category.
 
-# Cart
-my cart
-GET /v1/api/cart/:user_id
+- **GET** `/v1/api/products/reviews/:product_id`
+  - **Description**: Retrieve all reviews for a specific product.
 
-add to cart
-POST /v1/api/cart/add/:cart_id
+- **POST** `/v1/api/products/review/:user_id/:product_id`
+  - **Description**: Submit a review for a product.
 
-remove from cart
-PUT /v1/api/cart/:user_id/:product_id
+- **GET** `/v1/api/products/:id`
+  - **Description**: Retrieve a product by its ID.
 
-# Order
-/v1/api/order
+### Cart
+- **GET** `/v1/api/cart/:user_id`
+  - **Description**: Retrieve the cart for a specific user.
 
-# review
-create a review
-POST /v1/api/add/:id
+- **POST** `/v1/api/cart/add/:cart_id`
+  - **Description**: Add a product to the cart.
 
-# payment extended (verification only)
-/v1/api/payment
+- **PUT** `/v1/api/cart/:user_id/:product_id`
+  - **Description**: Remove a product from the cart.
 
-# Admin
-create category
-/v1/api/cat
-/v1/api/review
-/v1/api/lovette/admin
+### Order
+- **POST** `/v1/api/order`
+  - **Description**: Place an order.
+
+### Review
+- **POST** `/v1/api/add/:id`
+  - **Description**: Create a review (note: endpoint might need clarification).
+
+### Payment
+- **POST** `/v1/api/payment`
+  - **Description**: Verify payment (extended functionality).
+
+### Admin Routes
+- **POST** `/v1/api/cat`
+  - **Description**: Create a new category.
+
+- **POST** `/v1/api/review`
+  - **Description**: Create a new review.
+
+- **POST** `/v1/api/lovette/admin`
+  - **Description**: Create a new admin user.
+
+---
