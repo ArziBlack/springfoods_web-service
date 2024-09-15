@@ -9,6 +9,10 @@ import authRoute from "./auth.routes";
 import adminRoute from "./admin.routes";
 import categoryRoute from "./category.routes";
 import productRoute from "./product.routes";
+import cartRoute from "./cart.routes";
+import orderRoute from "./order.routes";
+import reviewRoute from "./review.routes";
+import paymentRoute from "./payment.routes";
 
 const router = Router();
 
@@ -28,9 +32,21 @@ router.use("/api/auth", authRoute);
 router.use("/api/lovette/admin", adminRoute);
 
 /** mount all protected categories routes */
-router.use("/api/user", categoryRoute);
+router.use("/api/category", categoryRoute);
 
 /** mount all protected products routes */
 router.use("/api/products", productRoute);
+
+/** mount all protected cart routes */
+router.use("/api/cart", cartRoute);
+
+/** mount all protected order routes */
+router.use("/api/order", orderRoute);
+
+/** mount all protected review routes */
+router.use("/api/review", reviewRoute);
+
+/** mount all protected payment routes */
+router.use("/api/payment", paymentRoute);
 
 export default router;

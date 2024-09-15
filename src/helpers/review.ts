@@ -6,5 +6,6 @@ export const mapReviewDocumentToResponse = (review: any): IReviewResponse => {
     rating: review.rating,
     review_title: review.review_title,
     review_content: review.review_content,
+    createdAt: review.createdAt, // Ensure this property is included
   };
 };

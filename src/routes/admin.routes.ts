@@ -23,41 +23,41 @@ const router = Router();
 /** ***************************************************** */
 
 // CREATE A CATEGORY
-router.route("/create").post(verify, create_category);
+router.route("/category").post(verify, create_category);
 
 // UPDATE A CATEGORY
-router.route("/update/:id").put(verify, update_category);
+router.route("/category/update/:id").put(verify, update_category);
 
 // DELETE A CATEGORY
-router.route("/remove/:id").delete(verify, delete_a_category);
+router.route("/category/remove/:id").delete(verify, delete_a_category);
 
 // GET A CATEGORY BY NAME
-router.route("/:name").get(verify, get_one_category);
+router.route("/category/:name").get(verify, get_one_category);
 
 // GET ALL CATEGORIES
-router.route("/").get(verify, get_all_categories);
+router.route("/category").get(verify, get_all_categories);
 
 /** ***************************************************** */
 /** **************ADMIN PRODUCT ENDPOINTS**************** */
 /** ***************************************************** */
 
 // GET ALL PRODUCTS
-router.route("/all").get(verify, get_all_products);
+router.route("/product/all").get(verify, get_all_products);
 
 // GET PRODUCTS BY CATEGORY NAME
-router.route("/category/:id").get(verify, get_all_products_by_category);
+router.route("/product/category/:id").get(verify, get_all_products_by_category);
 
 // GET PRODUCTS BY REVIEWS
-router.route("/reviews").get(verify, get_all_products_by_reviews);
+router.route("/product/reviews").get(verify, get_all_products_by_reviews);
 
 // CREATE A PRODUCT
-router.route("/create").post(verify, create_product);
+router.route("/product/create").post(verify, create_product);
 
 // UPDATE A PRODUCT
-router.route("/update/:id").put(verify, update_product);
+router.route("/product/update/:id").put(verify, update_product);
 
 // DELETE A PRODUCT
-router.route("/remove/:id").delete(verify, delete_product);
+router.route("/product/remove/:id").delete(verify, delete_product);
 
 /** ***************************************************** */
 /** **************ADMIN ORDER ENDPOINTS****************** */

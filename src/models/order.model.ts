@@ -41,6 +41,7 @@ const orderSchema = new Schema(
       enum: ["pending", "paid", "failed", "refunded"],
       default: "pending",
     },
+    payment_reference: { type: String },
     payment_method: {
       type: String,
       enum: ["credit_card", "paypal", "bank_transfer", "cash_on_delivery"],
