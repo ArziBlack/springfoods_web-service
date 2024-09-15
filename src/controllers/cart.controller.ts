@@ -3,7 +3,7 @@ import { ICart, ICartItem } from "../interfaces/cart";
 import { Cart } from "../models/cart.model";
 import { CartItem } from "../models/cart_item.model";
 import { TypedRequest, TypedResponse } from "../typings";
-import { mapCartDocumentToResponse } from "../helpers/cart";
+// import { mapCartDocumentToResponse } from "../helpers/cart";
 import { ApiErrorResponse, ApiResponse } from "../typings/response";
 import { cartValidatorSchema } from "../services/validation/cartValidator";
 
@@ -37,7 +37,7 @@ export const add_to_cart = async (
 
     const { items, price, total } = req.body;
 
-    let cart = await Cart.findOne({ user_id: user_id });
+    let cart = await Cart.findOne({ user_id: user_id }).lean();
 
     if (!cart) {
       cart = new Cart({ user_id: user_id, items: [], price: 0, total: 0 });
@@ -58,14 +58,14 @@ export const add_to_cart = async (
     cart.price += price;
     cart.total += total;
 
-    await cart.save();
+    const saved_cart = await cart.save();
 
-    const mapped_cart = mapCartDocumentToResponse(cart);
+    // const mapped_cart = mapCartDocumentToResponse(cart);
 
     const successResponse: ApiResponse<ICart> = {
       success: true,
       message: "cart updated successfully👍",
-      data: mapped_cart,
+      data: saved_cart,
     };
 
     res.status(201).json(successResponse);
@@ -90,7 +90,7 @@ export const get_my_cart = async (
       });
     }
 
-    const my_cart = await Cart.findOne({ user_id: user_id });
+    const my_cart = await Cart.findOne({ user_id: user_id }).lean();
 
     if (!my_cart) {
       return res.status(404).json({
@@ -99,12 +99,12 @@ export const get_my_cart = async (
       });
     }
 
-    const cart_response = mapCartDocumentToResponse(my_cart);
+    // const cart_response = mapCartDocumentToResponse(my_cart);
 
     const successResponse: ApiResponse<ICart> = {
       success: true,
       message: "Categories fetched successfully",
-      data: cart_response,
+      data: my_cart,
     };
 
     res.status(200).json(successResponse);

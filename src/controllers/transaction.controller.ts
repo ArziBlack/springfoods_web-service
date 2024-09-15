@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { Order } from "../models/order.model";
+import axios from "axios";
 
 // VERIFY PAYSTACK PAYMENT
 export const verify_payment = async (req: Request, res: Response, next: NextFunction) => {
