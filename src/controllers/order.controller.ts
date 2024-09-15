@@ -56,7 +56,7 @@ export const add_order = async (req: Request, res: Response, next: NextFunction)
 // ADD A NEW ORDER WITH PAYSTACK PAYMENT
 export const add_order_v2 = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { user_id, items, shipping_address, payment_method, email } = req.body;
+        const { user_id, items, shipping_address, payment_method, email, amount } = req.body;
 
         if (!user_id || !items || !shipping_address || !payment_method || !email) {
             return res.status(400).json({
@@ -118,7 +118,7 @@ export const add_order_v2 = async (req: Request, res: Response, next: NextFuncti
         const transaction = new Transcation({
             order_id: newOrder._id,
             user_id: user_id,
-            amount: 
+            amount: amount
         })
 
         const savedOrder = await newOrder.save();
