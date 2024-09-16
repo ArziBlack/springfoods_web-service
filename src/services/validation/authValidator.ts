@@ -10,6 +10,10 @@ export const signupSchema = Joi.object({
     "any.required": "First name is required",
   }),
   last_name: Joi.string().optional().allow(""),
+  password: Joi.string().required().messages({
+    "string.empty": "Password is required",
+    "any.required": "Password is required",
+  }),
   phone_number: Joi.string().optional().allow(""),
   zip_code: Joi.number().optional(),
   city: Joi.string().optional().allow(""),
