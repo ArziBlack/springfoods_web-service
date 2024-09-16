@@ -180,7 +180,7 @@ export const get_all_products = async (
 
     const successResponse: ApiResponse<IProductResponse[]> = {
       success: true,
-      message: "Categories fetched successfully",
+      message: "Products fetched successfully👍",
       data: product_response,
       pagination: pagination,
     };
