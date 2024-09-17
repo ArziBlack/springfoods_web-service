@@ -224,7 +224,7 @@ export const get_all_products_by_category = async (
 
     const successResponse: ApiResponse<IProductResponse[]> = {
       success: true,
-      message: `Products fetched successfully for category: ${name}`,
+      message: `Products fetched successfully for category: ${id}`,
       data: mappedProducts,
     };
 
