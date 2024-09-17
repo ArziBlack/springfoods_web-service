@@ -14,8 +14,8 @@ const router = Router();
 // GET ALL PRODUCTS
 router.route("/").get(verify, get_all_products);
 
-// GET PRODUCTS BY CATEGORY NAME
-router.route("/category/:name").get(verify, get_all_products_by_category);
+// GET PRODUCTS BY CATEGORY ID
+router.route("/category/:id").get(verify, get_all_products_by_category);
 
 // GET PRODUCTS BY REVIEWS
 router.route("/reviews").get(verify, get_all_products_by_reviews);

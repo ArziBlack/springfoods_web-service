@@ -198,23 +198,23 @@ export const get_all_products_by_category = async (
   next: NextFunction
 ) => {
   try {
-    const { name } = req.params;
+    const { id } = req.params;
 
-    if (!name) {
+    if (!id) {
       return res.status(400).json({
         success: false,
         message: "'name' param cannot be null or empty!!!",
       });
     }
 
-    const products_by_category = await Product.find({ name: name }).populate(
+    const products_by_category = await Product.find({ category_id: id }).populate(
       "category"
     );
 
     if (!products_by_category.length) {
       return res.status(404).json({
         success: false,
-        message: `No products found for category: ${name}`,
+        message: `No products found for category: ${id}`,
       });
     }
 
