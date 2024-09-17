@@ -43,7 +43,7 @@ export const create_category = async (
 
     const successResponse: ApiResponse<ICategoryResponse> = {
       success: true,
-      message: "Categories fetched successfully",
+      message: "categories created successfully👍",
       data: response,
     };
     res.status(201).json(successResponse);
