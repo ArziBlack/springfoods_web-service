@@ -4,6 +4,7 @@ import { ApiErrorResponse, ApiResponse } from "../typings/response";
 import { productValidationSchema } from "../services/validation/productValidator";
 import { Product } from "../models/product.model";
 import { mapProductDocumentToResponse } from "../helpers/product";
+import { IProductResponse } from "../interfaces/product";
 
 // CREATE A PRODUCT
 export const create_product = async (

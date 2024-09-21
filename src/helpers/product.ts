@@ -1,10 +1,8 @@
-import { Types } from "mongoose";
 
 export const mapProductDocumentToResponse = (
   product: any,
-): IProductResponse => {
+): any => {
   return {
-    _id: product._id?.toString(),
     category_id: product.category_id?.toString() || "",
     category: product.category || "",
     name: product.name,
@@ -23,14 +21,14 @@ export const mapProductDocumentToResponse = (
       user: review.user.toString(),
       rating: review.rating,
       review_title: review.review_title,
-      review_content: review.review_content
+      review_content: review.review_content,
     })),
     average_rating: product.average_rating,
     total_reviews: product.total_reviews,
     is_available: product.is_available,
     tags: product.tags,
     related_products:
-      product.related_products?.map((rp: Types.ObjectId) => rp.toString()) ||
+      product.related_products?.map((rp: string) => rp.toString()) ||
       [],
     vendor_id: product.vendor_id.toString(),
   };
