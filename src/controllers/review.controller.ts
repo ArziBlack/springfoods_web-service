@@ -5,6 +5,7 @@ import { reviewValidationSchema } from "../services/validation/reviewValidator";
 import { Product } from "../models/product.model";
 import { Review } from "../models/review.model";
 import { mapReviewDocumentToResponse } from "../helpers/review";
+import { IProductResponse } from "../interfaces/product";
 
 // CREATE A REVIEW FOR A PRODUCT
 export const create_review = async (
