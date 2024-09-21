@@ -25,6 +25,7 @@ interface IProductRequest {
 }
 
 interface IProductResponse {
+  _id: string;
   category_id?: string;
   category?: string;
   name: string;
