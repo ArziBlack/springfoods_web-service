@@ -359,13 +359,10 @@ export const get_all_products_with_reviews = async (req: TypedRequest,
 }
 
 // GET ALL FEATURED PRODUCTS
-export const get_featured_products = async (req:TypedRequest, res:Response, next: NextFunction ) => {
+export const get_featured_products = async (req: TypedRequest, res: Response, next: NextFunction) => {
   try {
-    const page = parseInt(req.query.page as string) || 1;
-    const limit = parseInt(req.query.limit as string) || 10;
-    const skip = (page - 1) * limit;
 
-    const products = await Product.find({ featured: true }).skip(skip).limit(limit);
+    const products = await Product.find();
 
     if (!products.length) {
       return res.status(200).json({
@@ -375,15 +372,9 @@ export const get_featured_products = async (req:TypedRequest, res:Response, next
       });
     }
 
-    const no_of_products = products.length;
+    const totalProducts = products.filter(item => item.featured === true);
 
-    const pagination = {
-      totalItems: no_of_products,
-      totalPages: Math.ceil(no_of_products / limit),
-      currentPage: page,
-      hasNextPage: page < Math.ceil(no_of_products / limit),
-      hasPrevPage: page > 1,
-    };
+    const no_of_products = totalProducts.length;
 
     const product_response: IProductResponse[] = products.map(
       mapProductDocumentToResponse
@@ -393,7 +384,6 @@ export const get_featured_products = async (req:TypedRequest, res:Response, next
       success: true,
       message: "Products fetched successfully👍",
       data: product_response,
-      pagination: pagination,
     };
 
     res.status(200).json(successResponse);
