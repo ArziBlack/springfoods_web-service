@@ -4,7 +4,7 @@ export const mapProductDocumentToResponse = (
   product: any,
 ): IProductResponse => {
   return {
-    _id: product._id,
+    _id: product._id?.toString(),
     category_id: product.category_id?.toString() || "",
     category: product.category || "",
     name: product.name,
