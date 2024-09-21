@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { IProductRequest } from "../../interfaces/product";
 
 export const productValidationSchema = Joi.object<IProductRequest>({
   category_id: Joi.string().optional(),
