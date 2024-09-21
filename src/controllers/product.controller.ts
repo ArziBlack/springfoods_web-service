@@ -324,6 +324,7 @@ export const get_all_products_with_reviews = async (req: TypedRequest,
   next: NextFunction) => {
   try {
     const { product_id } = req.params;
+
     if (!product_id) {
       return res.status(400).json({
         success: false,
@@ -354,6 +355,41 @@ export const get_all_products_with_reviews = async (req: TypedRequest,
     res.status(200).json(successResponse);
   } catch (error) {
     next(error)
+  }
+}
+
+// GET ALL FEATURED PRODUCTS
+export const get_featured_products = async (req:TypedRequest, res:Response, next: NextFunction ) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const skip = (page - 1) * limit;
+
+    const products = await Product.find({ featured: true }).skip(skip).limit(limit);
+    const no_of_products = products.length;
+
+    const pagination = {
+      totalItems: no_of_products,
+      totalPages: Math.ceil(no_of_products / limit),
+      currentPage: page,
+      hasNextPage: page < Math.ceil(no_of_products / limit),
+      hasPrevPage: page > 1,
+    };
+
+    const product_response: IProductResponse[] = products.map(
+      mapProductDocumentToResponse
+    );
+
+    const successResponse: ApiResponse<IProductResponse[]> = {
+      success: true,
+      message: "Products fetched successfully👍",
+      data: product_response,
+      pagination: pagination,
+    };
+
+    res.status(200).json(successResponse);
+  } catch (error) {
+    next(error);
   }
 }
 

@@ -5,6 +5,7 @@ import {
   get_all_products_by_category,
   get_all_products_by_reviews,
   get_all_products_with_reviews,
+  get_featured_products,
   get_product_by_ID,
 } from "../controllers/product.controller";
 import { verify } from "../services/verifyService";
@@ -28,5 +29,8 @@ router.route("/review/:user_id/:product_id").post(verify, add_review_to_a_produc
 
 // GET PRODUCT BY ID (SINGLE PRODUCT)
 router.route("/:id").get(verify, get_product_by_ID);
+
+// GET FEATURED PRODUCTS
+router.route("/featured").get(verify, get_featured_products);
 
 export default router;
