@@ -366,6 +366,15 @@ export const get_featured_products = async (req:TypedRequest, res:Response, next
     const skip = (page - 1) * limit;
 
     const products = await Product.find({ featured: true }).skip(skip).limit(limit);
+
+    if (!products.length) {
+      return res.status(200).json({
+        success: true,
+        message: "No featured products available.😒",
+        data: null
+      });
+    }
+
     const no_of_products = products.length;
 
     const pagination = {
