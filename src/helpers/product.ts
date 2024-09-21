@@ -8,7 +8,7 @@ export const mapProductDocumentToResponse = (
     category_id: product.category_id?.toString() || "",
     category: product.category || "",
     name: product.name,
-    featured: product.featured,
+    featured: product.featured as boolean,
     price: product.price,
     discount: product.discount,
     final_price: product.final_price,

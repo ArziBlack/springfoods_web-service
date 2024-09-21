@@ -359,13 +359,13 @@ export const get_all_products_with_reviews = async (req: TypedRequest,
 }
 
 // GET ALL FEATURED PRODUCTS
-export const get_featured_products = async (req:TypedRequest, res:Response, next: NextFunction ) => {
+export const get_featured_products = async (req:TypedRequest, res:TypedResponse<ApiResponse<IProductResponse[]>>, next: NextFunction ) => {
   try {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
     const skip = (page - 1) * limit;
 
-    const products = await Product.find({ featured: true }).skip(skip).limit(limit);
+    const products = await Product.find({ featured: true }).skip(skip).limit(limit).lean();
 
     if (!products.length) {
       return res.status(200).json({
