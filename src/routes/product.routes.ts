@@ -13,7 +13,7 @@ import { verify } from "../services/verifyService";
 const router = Router();
 
 // GET ALL PRODUCTS
-router.route("/").get(verify, get_all_products);
+router.route("/").get(get_all_products);
 
 // GET PRODUCTS BY CATEGORY ID
 router.route("/category/:id").get(verify, get_all_products_by_category);
