@@ -9,6 +9,8 @@ import {
   get_product_by_ID,
 } from "../controllers/product.controller";
 import { verify } from "../services/verifyService";
+import { validateParams } from "../middleware/validate";
+import { idSchema, productIdSchema, productReviewSchema } from "../services/validation/productValidator";
 
 const router = Router();
 
@@ -16,19 +18,19 @@ const router = Router();
 router.route("/").get(get_all_products);
 
 // GET PRODUCTS BY CATEGORY ID
-router.route("/category/:id").get(verify, get_all_products_by_category);
+router.route("/category/:id").get(verify, validateParams(idSchema), get_all_products_by_category);
 
 // GET PRODUCTS BY REVIEWS
 router.route("/reviews").get(verify, get_all_products_by_reviews);
 
 // GET PRODUCTS WITH REVIEWS
-router.route("/reviews/:product_id").get(verify, get_all_products_with_reviews);
+router.route("/reviews/:product_id").get(verify, validateParams(productIdSchema), get_all_products_with_reviews);
 
 // ADD REVIEW TO A PRODUCT
-router.route("/review/:user_id/:product_id").post(verify, add_review_to_a_product);
+router.route("/review/:user_id/:product_id").post(verify, validateParams(productReviewSchema), add_review_to_a_product);
 
 // GET PRODUCT BY ID (SINGLE PRODUCT)
-router.route("/:id").get(verify, get_product_by_ID);
+router.route("/:id").get(verify, validateParams(idSchema), get_product_by_ID);
 
 // GET FEATURED PRODUCTS
 router.route("/featured").get(verify, get_featured_products);

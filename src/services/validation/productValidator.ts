@@ -26,3 +26,16 @@ export const productValidationSchema = Joi.object<IProductRequest>({
   tags: Joi.array().items(Joi.string()).min(1).required(),
   vendor_id: Joi.string().required(),
 });
+
+export const idSchema = Joi.object({
+  id: Joi.string().required(), 
+});
+
+export const productReviewSchema = Joi.object({
+  user_id: Joi.string().uuid().required(),
+  product_id: Joi.string().uuid().required(),
+});
+
+export const productIdSchema = Joi.object({
+  product_id: Joi.string().uuid().required(),
+});
