@@ -11,7 +11,7 @@ import { cartValidatorSchema } from "../services/validation/cartValidator";
 export const add_to_cart = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<ICart> | ApiErrorResponse>,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const user_id = req.params.user_id;
@@ -39,9 +39,9 @@ export const add_to_cart = async (
 
     let cart = await Cart.findOne({ user_id: user_id }).lean();
 
-    if (!cart) {
-      cart = new Cart({ user_id: user_id, items: [], price: 0, total: 0 });
-    }
+    // if (!cart) {
+    //   cart = new Cart({ user_id: user_id, items: [], price: 0, total: 0 });
+    // }
 
     const new_cart_items = items.map(
       (item: any) =>
@@ -50,7 +50,7 @@ export const add_to_cart = async (
           product_id: item.product_id,
           quantity: item.quantity,
           price: item.price,
-        }),
+        })
     );
 
     cart.items.push(...new_cart_items);
@@ -78,7 +78,7 @@ export const add_to_cart = async (
 export const get_my_cart = async (
   req: TypedRequest,
   res: TypedResponse<ApiResponse<ICart> | ApiErrorResponse>,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const user_id = req.params.user_id;
@@ -104,7 +104,7 @@ export const get_my_cart = async (
     const successResponse: ApiResponse<ICart> = {
       success: true,
       message: "Categories fetched successfully",
-      data: my_cart,
+      data: my_cart as unknown as ICart,
     };
 
     res.status(200).json(successResponse);
@@ -112,7 +112,6 @@ export const get_my_cart = async (
     next(error);
   }
 };
-
 
 // REMOVE ITEM FROM CART OR UPDATE CART
 export const remove_item_from_cart = async (
@@ -137,11 +136,17 @@ export const remove_item_from_cart = async (
       });
     }
 
-    const item: ICartItem = cart.items.find(itm => itm.product === product_id);
+    const item: ICartItem = cart.items.find(
+      (itm) => itm.product === product_id
+    );
 
     // const saved = await Cart.findOneAndUpdate({user_id: cart_id}, {$set: { items: new_items, price: new_price, total: new_total}}, { new: true });
 
-    const saved = await Cart.findOneAndUpdate({ user_id: user_id }, { $set: req.body }, { new: true });
+    const saved = await Cart.findOneAndUpdate(
+      { user_id: user_id },
+      { $set: req.body },
+      { new: true }
+    );
 
     if (!saved) {
       return res.status(404).json({
