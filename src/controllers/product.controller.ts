@@ -184,14 +184,47 @@ export const get_all_products = async (
       hasPrevPage: page > 1,
     };
 
-    const product_response: IProductResponse[] = products.map(
-      mapProductDocumentToResponse
-    );
+    const product_response = products.map((product) => {
+      const mappedProduct = {
+        ...product,
+        reviews:
+          product.reviews?.map((review) => ({
+            _id: review._id,
+            rating: review.rating,
+            review_title: review.review_title,
+            review_content: review.review_content,
+            user: {
+              id: review.user_id._id,
+              role: review.user_id.role,
+              profile_image: review.user_id.profile_image,
+              gender: review.user_id.gender,
+              contact: {
+                email: review.user_id.contact.email,
+                first_name: review.user_id.contact.first_name,
+                last_name: review.user_id.contact.last_name,
+              },
+            },
+            createdAt: review.createdAt,
+            updatedAt: review.updatedAt,
+          })) || [],
+      };
+
+      if (mappedProduct.reviews.length > 0) {
+        const totalRating = mappedProduct.reviews.reduce(
+          (sum, review) => sum + review.rating,
+          0
+        );
+        mappedProduct.average_rating =
+          totalRating / mappedProduct.reviews.length;
+      }
+
+      return mappedProduct;
+    });
 
     const successResponse: ApiResponse<IProductResponse[]> = {
       success: true,
       message: "Products fetched successfully👍",
-      data: product_response,
+      data: product_response as unknown as IProductResponse[],
       pagination: pagination,
     };
 
