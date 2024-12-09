@@ -427,17 +427,6 @@ export const update_product = async (
       });
     }
 
-    const { error } = productValidationSchema.validate(req.body, {
-      abortEarly: false,
-    });
-    if (error) {
-      return res.status(400).json({
-        success: false,
-        message: "Validation failed",
-        errors: error.details.map((detail) => detail.message),
-      });
-    }
-
     const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
       new: true,
       runValidators: true,
