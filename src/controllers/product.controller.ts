@@ -167,7 +167,7 @@ export const get_all_products = async (
     const products = await Product.find()
       .populate({
         path: "reviews.user",
-        select: "profile_image email",
+        select: "profile_image",
         populate: {
           path: "contact",
           select: "email first_name last_name",
