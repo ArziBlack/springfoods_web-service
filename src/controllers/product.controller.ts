@@ -170,7 +170,7 @@ export const get_all_products = async (
         select: "profile_image gender role",
         populate: {
           path: "contact",
-          select: "email first_name last_name",
+          select: "email first_name last_name -_id",
         },
       })
       .skip(skip)
@@ -193,17 +193,21 @@ export const get_all_products = async (
             rating: review.rating,
             review_title: review.review_title,
             review_content: review.review_content,
-            user: {
-              id: review.user._id,
-              role: review.user.role,
-              profile_image: review.user.profile_image,
-              gender: review.user.gender,
-              contact: {
-                email: review.user.contact.email,
-                first_name: review.user.contact.first_name,
-                last_name: review.user.contact.last_name,
-              },
-            },
+            user: review.user
+              ? {
+                  id: review.user._id,
+                  role: review.user.role,
+                  profile_image: review.user.profile_image,
+                  gender: review.user.gender,
+                  contact: review.user.contact
+                    ? {
+                        email: review.user.contact.email,
+                        first_name: review.user.contact.first_name,
+                        last_name: review.user.contact.last_name,
+                      }
+                    : null,
+                }
+              : null,
             createdAt: review.createdAt,
             updatedAt: review.updatedAt,
           })) || [],
