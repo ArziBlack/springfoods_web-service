@@ -8,6 +8,7 @@ import {
   get_all_products_with_reviews,
   get_featured_products,
   get_product_by_ID,
+  update_product,
 } from "../controllers/product.controller";
 import { verify } from "../services/verifyService";
 import { validateParams } from "../middleware/validate";
@@ -26,6 +27,9 @@ router.route("/").get(get_all_products);
 router
   .route("/category/:id")
   .get(verify, validateParams(idSchema), get_all_products_by_category);
+
+// UPDATE A PRODUCT BY ID
+router.route("/:id").put(verify, validateParams(idSchema), update_product);
 
 // GET PRODUCTS BY REVIEWS
 router.route("/reviews").get(verify, get_all_products_by_reviews);
