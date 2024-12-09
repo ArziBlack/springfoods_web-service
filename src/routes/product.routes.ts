@@ -43,7 +43,7 @@ router
 // REMOVE REVIEW FROM A PRODUCT
 router
   .route("/delete-review/:user_id/:product_id")
-  .post(
+  .delete(
     verify,
     validateParams(productReviewSchema),
     delete_review_from_a_product
