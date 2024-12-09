@@ -7,6 +7,8 @@ export const validateParams = (schema: Joi.Schema) => {
 
     if (error) {
       return res.status(400).json({
+        success: false,
+        message: "params validation failed!!",
         error: error.details.map((detail) => detail.message),
       });
     }
