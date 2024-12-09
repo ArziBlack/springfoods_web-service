@@ -180,51 +180,10 @@ export const get_all_products = async (
       hasPrevPage: page > 1,
     };
 
-    const product_response = products.map((product) => {
-      const mappedProduct = {
-        ...product,
-        reviews:
-          product.reviews?.map((review) => ({
-            _id: review._id,
-            rating: review.rating,
-            review_title: review.review_title,
-            review_content: review.review_content,
-            user: review.user
-              ? {
-                  id: review.user._id,
-                  role: review.user.role,
-                  profile_image: review.user.profile_image,
-                  gender: review.user.gender,
-                  contact: review.user.contact
-                    ? {
-                        email: review.user.contact.email,
-                        first_name: review.user.contact.first_name,
-                        last_name: review.user.contact.last_name,
-                      }
-                    : null,
-                }
-              : null,
-            createdAt: review.createdAt,
-            updatedAt: review.updatedAt,
-          })) || [],
-      };
-
-      if (mappedProduct.reviews.length > 0) {
-        const totalRating = mappedProduct.reviews.reduce(
-          (sum, review) => sum + review.rating,
-          0
-        );
-        mappedProduct.average_rating =
-          totalRating / mappedProduct.reviews.length;
-      }
-
-      return mappedProduct;
-    });
-
     const successResponse: ApiResponse<IProductResponse[]> = {
       success: true,
       message: "Products fetched successfully👍",
-      data: product_response as unknown as IProductResponse[],
+      data: products as unknown as IProductResponse[],
       pagination: pagination,
     };
 
