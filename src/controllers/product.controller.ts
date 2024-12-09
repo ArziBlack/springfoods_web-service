@@ -170,7 +170,7 @@ export const get_all_products = async (
         select: "profile_image",
         populate: {
           path: "contact",
-          select: "email",
+          select: "email first_name last_name",
         },
       })
       .skip(skip)

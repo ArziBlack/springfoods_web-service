@@ -33,8 +33,8 @@ const contactSchema = new Schema(
   }
 );
 
-// contactSchema.virtual("id").get(function () {
-//   return this._id.toHexString();
-// });
+contactSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
 
 export const Contact = model("Contact", contactSchema);
