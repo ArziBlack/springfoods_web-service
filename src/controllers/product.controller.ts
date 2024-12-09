@@ -164,7 +164,17 @@ export const get_all_products = async (
     const skip = (page - 1) * limit;
 
     const no_of_products = await Product.countDocuments();
-    const products = await Product.find().skip(skip).limit(limit);
+    const products = await Product.find()
+      .populate({
+        path: "reviews.user_id",
+        select: "profile_image gender role",
+        populate: {
+          path: "contact",
+          select: "email first_name last_name",
+        },
+      })
+      .skip(skip)
+      .limit(limit);
 
     const pagination = {
       totalItems: no_of_products,
