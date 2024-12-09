@@ -28,12 +28,12 @@ export const productValidationSchema = Joi.object<IProductRequest>({
 });
 
 export const idSchema = Joi.object({
-  id: Joi.string().required(), 
+  id: Joi.string().required(),
 });
 
 export const productReviewSchema = Joi.object({
-  user_id: Joi.string().uuid().required(),
-  product_id: Joi.string().uuid().required(),
+  user_id: Joi.string().required(),
+  product_id: Joi.string().required(),
 });
 
 export const productIdSchema = Joi.object({
