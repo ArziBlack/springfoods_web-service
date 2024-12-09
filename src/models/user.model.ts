@@ -70,6 +70,16 @@ userSchema.virtual("full_name").get(function (this: IUserDocument) {
   return "";
 });
 
+// Add virtual for full name
+// userSchema.virtual('full_name').get(function() {
+//   if (this.contact && typeof this.contact !== 'string') {
+//     const firstName = this.contact?.first_name || '';
+//     const lastName = this.contact?.last_name || '';
+//     return `${firstName} ${lastName}`.trim();
+//   }
+//   return '';
+// });
+
 // Static method to find by full name
 userSchema.static("findByFullName", async function (name: string) {
   return this.find()
