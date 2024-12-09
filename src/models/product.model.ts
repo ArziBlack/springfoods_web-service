@@ -32,4 +32,30 @@ const productSchema = new Schema(
   { timestamps: true }
 );
 
+// Add middleware to calculate final price before saving
+productSchema.pre("save", function (next) {
+  if (this.price && this.discount) {
+    this.final_price = this.price - this.price * (this.discount / 100);
+  } else {
+    this.final_price = this.price;
+  }
+  next();
+});
+
+// Add middleware to update average rating and total reviews when a review is added/modified
+productSchema.pre("save", function (next) {
+  if (this.reviews?.length > 0) {
+    this.total_reviews = this.reviews.length;
+    const totalRating = this.reviews.reduce(
+      (sum, review) => sum + review.rating,
+      0
+    );
+    this.average_rating = totalRating / this.total_reviews;
+  } else {
+    this.total_reviews = 0;
+    this.average_rating = 0;
+  }
+  next();
+});
+
 export const Product = model("Product", productSchema);

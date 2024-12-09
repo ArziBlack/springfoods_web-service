@@ -4,6 +4,7 @@ import {
   signup_customer,
   verify_email,
 } from "../controllers/auth.controller";
+import { celebrate as validate } from "celebrate";
 
 const router = Router();
 
