@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   add_review_to_a_product,
+  delete_product,
   delete_review_from_a_product,
   get_all_products,
   get_all_products_by_category,

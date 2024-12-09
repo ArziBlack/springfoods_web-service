@@ -5,3 +5,11 @@ type TypedResponse<T> = Response<ApiResponse<T>>;
 type TypedNextFn = NextFunction;
 
 type Params<P extends string> = Record<P, string>;
+
+declare global {
+  namespace Express {
+    interface Request {
+      user?: TokenPayload;
+    }
+  }
+}
