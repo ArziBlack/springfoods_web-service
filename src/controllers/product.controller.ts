@@ -168,10 +168,10 @@ export const get_all_products = async (
       .populate({
         path: "reviews.user",
         select: "profile_image gender role",
-        populate: {
-          path: "contact",
-          select: "email first_name last_name -_id",
-        },
+      })
+      .populate({
+        path: "reviews.user.contact",
+        select: "email first_name last_name -_id",
       })
       .skip(skip)
       .limit(limit);
