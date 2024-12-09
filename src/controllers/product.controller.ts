@@ -31,7 +31,7 @@ export const create_product = async (
 
     const successResponse: ApiResponse<IProductResponse> = {
       success: true,
-      message: "Categories Created Successfully",
+      message: "Product Created Successfully",
       data: saved_product as unknown as IProductResponse,
     };
 
