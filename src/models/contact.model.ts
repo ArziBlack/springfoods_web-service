@@ -12,7 +12,29 @@ const contactSchema = new Schema(
     state: { type: String },
     country: { type: String },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toJSON: {
+      transform: function (doc, ret) {
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+      },
+      virtuals: true,
+    },
+    toObject: {
+      transform: function (doc, ret) {
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+      },
+      virtuals: true,
+    },
+  }
 );
+
+contactSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
 
 export const Contact = model("Contact", contactSchema);
