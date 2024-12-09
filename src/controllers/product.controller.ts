@@ -74,6 +74,7 @@ export const add_review_to_a_product = async (
 
     const review = {
       user: user_id,
+      user_id,
       product: product_id,
       rating,
       review_title,
@@ -151,8 +152,6 @@ export const delete_review_from_a_product = async (
   }
 };
 
-
-
 // GET ALL PRODUCTS
 export const get_all_products = async (
   req: TypedRequest,
@@ -208,9 +207,9 @@ export const get_all_products_by_category = async (
       });
     }
 
-    const products_by_category = await Product.find({ category_id: id }).populate(
-      "category"
-    );
+    const products_by_category = await Product.find({
+      category_id: id,
+    }).populate("category");
 
     if (!products_by_category.length) {
       return res.status(404).json({
@@ -320,9 +319,11 @@ export const get_all_products_by_reviews = async (
 };
 
 // GET A PRODUCTS WITH REVIEWS
-export const get_all_products_with_reviews = async (req: TypedRequest,
+export const get_all_products_with_reviews = async (
+  req: TypedRequest,
   res: TypedResponse<ApiResponse<IProductResponse>>,
-  next: NextFunction) => {
+  next: NextFunction
+) => {
   try {
     const { product_id } = req.params;
 
@@ -334,7 +335,7 @@ export const get_all_products_with_reviews = async (req: TypedRequest,
     }
 
     const product_with_reviews = await Product.findById(product_id)
-      .populate('reviews.user', 'name email')
+      .populate("reviews.user", "name email")
       .exec();
 
     if (!product_with_reviews) {
@@ -355,24 +356,31 @@ export const get_all_products_with_reviews = async (req: TypedRequest,
 
     res.status(200).json(successResponse);
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
 // GET ALL FEATURED PRODUCTS
-export const get_featured_products = async (req:TypedRequest, res:TypedResponse<ApiResponse<IProductResponse[]>>, next: NextFunction ) => {
+export const get_featured_products = async (
+  req: TypedRequest,
+  res: TypedResponse<ApiResponse<IProductResponse[]>>,
+  next: NextFunction
+) => {
   try {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
     const skip = (page - 1) * limit;
 
-    const products = await Product.find({ featured: true }).skip(skip).limit(limit).lean();
+    const products = await Product.find({ featured: true })
+      .skip(skip)
+      .limit(limit)
+      .lean();
 
     if (!products.length) {
       return res.status(200).json({
         success: true,
         message: "No featured products available.😒",
-        data: null
+        data: null,
       });
     }
 
@@ -401,7 +409,7 @@ export const get_featured_products = async (req:TypedRequest, res:TypedResponse<
   } catch (error) {
     next(error);
   }
-}
+};
 
 // UPDATE A PRODUCT
 export const update_product = async (
