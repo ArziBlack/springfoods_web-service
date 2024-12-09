@@ -166,7 +166,7 @@ export const get_all_products = async (
     const no_of_products = await Product.countDocuments();
     const products = await Product.find()
       .populate({
-        path: "reviews.user_id",
+        path: "reviews.user",
         select: "profile_image gender role",
         populate: {
           path: "contact",
