@@ -29,12 +29,10 @@ export const create_product = async (
 
     const saved_product = await product.save();
 
-    const product_response = mapProductDocumentToResponse(saved_product);
-
     const successResponse: ApiResponse<IProductResponse> = {
       success: true,
       message: "Categories fetched successfully",
-      data: product_response,
+      data: saved_product as unknown as IProductResponse,
     };
 
     res.status(201).json(successResponse);
